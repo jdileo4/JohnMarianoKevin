@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Entry{
+class Datum{
 
 public:
 
@@ -15,10 +15,8 @@ public:
 
 private:
 
-	int key;
-	int value;
-	double value;
 	string name;
+	double value;
 
 };
 
