@@ -1,7 +1,7 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include "Row.h"
+#include "Column.h"
 
 class Table{
 
@@ -12,8 +12,6 @@ public:
 	void addRow(vector<Datum> rowData);
 	void addColumn(string name, string type);
 	
-
-
 private:
 
 	int tableID;
