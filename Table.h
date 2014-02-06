@@ -7,6 +7,11 @@ class Table{
 
 public:
 
+	Table(string name, vector<string> keys);
+	
+	void addRow(vector<Datum> rowData);
+	void addColumn(string name, string type);
+	
 
 
 private:
@@ -14,8 +19,8 @@ private:
 	int tableID;
 	string tableName;
 
-	vector<Entity> tablEntity;
-
+	vector<string> keyColumns;
+	vector<Column> tableColumn;
 };
 
 #endif
