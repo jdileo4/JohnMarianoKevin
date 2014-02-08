@@ -22,8 +22,6 @@ public:
 	void setName(string s) { name = s; }
 	void setValue(double v) { value = v; }
 
-	
-
 private:
 
 	string name;

@@ -9,5 +9,11 @@
 
 // Headers for CppUnitTest
 #include "CppUnitTest.h"
+#include <string>
+#include <vector>
+#include "Files\Datum.h"
+#include "Files\Column.h"
+#include "Files\Table.h"
 
+using namespace std;
 // TODO: reference additional headers your program requires here
