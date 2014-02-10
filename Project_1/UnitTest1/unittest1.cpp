@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "stdafx.h"
-
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest1
@@ -13,16 +11,21 @@ namespace UnitTest1
 		
 		TEST_METHOD(CONSTRUCTORS)
 		{
+			//TEST VARIABLES----
 			vector<string>keys;
 			keys.push_back("Name");
 			keys.push_back("ID");
 
+			//DATUM-------
 			Datum datum1(100.00);
 			Datum datum2("Fred");
 			Datum datum3(100);
 
+			//COLUMN------
 			Column column1("Name","STRING");
+			assertTrue(column1.)
 
+			//TABLE-------
 			Table table1("Patients",keys);
 		}
 

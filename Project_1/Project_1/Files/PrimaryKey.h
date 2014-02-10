@@ -1,7 +1,7 @@
 #ifndef PRIMARY_KEY_H
 #define PRIMARY_KEY_H
 
-class Primary_Key{
+class PrimaryKey{
   
 public:
   

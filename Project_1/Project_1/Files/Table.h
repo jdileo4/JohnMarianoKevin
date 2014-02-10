@@ -8,10 +8,10 @@ class Table{
 public:
 
 	Table(string name, vector<string> keys);
-	
+
 	void addRow(vector<Datum> rowData);
 	void addColumn(string name, string type);
-	
+
 private:
 
 	int tableID;
