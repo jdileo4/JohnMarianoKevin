@@ -6,11 +6,11 @@
 class Column{
 
 public:
+	Column(string name, string type);
 
-
-
+/*
 private:
-
+*/
 	string columnType;
 	string columnName;
 
