@@ -10,10 +10,6 @@
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
 #include <windows.h>
-#include "Files\Datum.h"
-#include "Files\Column.h"
-#include "Files\PrimaryKey.h"
-#include "Files\Table.h"
 
 
 // TODO: reference additional headers your program requires here

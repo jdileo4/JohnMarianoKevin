@@ -9,82 +9,85 @@ namespace UnitTest1
 	{
 	public:
 		
-		TEST_METHOD(CONSTRUCTORS)
-		{
-			//TEST VARIABLES----
-			vector<string>keys;
-			keys.push_back("Name");
-			keys.push_back("ID");
 
-			//DATUM-------
-			Datum datum1(100.00);
-			Datum datum2("Fred");
-			Datum datum3(100);
 
-			//COLUMN------
-			Column column1("Name","STRING");
 
-			//TABLE-------
-			Table table1("Patients",keys);
-		}
+		//TEST_METHOD(CONSTRUCTORS)
+		//{
+		//	//TEST VARIABLES----
+		//	vector<string>keys;
+		//	keys.push_back("Name");
+		//	keys.push_back("ID");
 
-		TEST_METHOD(FUNCTIONS)
-		{
-			vector<string>keys;
+		//	//DATUM-------
+		//	Datum datum1(100.00);
+		//	Datum datum2("Fred");
+		//	Datum datum3(100);
 
-			vector<Datum> data;
-			data.push_back(Datum("Mariano"));
+		//	//COLUMN------
+		//	Column column1("Name","STRING");
 
-			vector<Datum> data2;
-			data2.push_back(Datum("Mariano"));
-			data2.push_back(Datum("John"));
-			data2.push_back(Datum("Kevin"));
+		//	//TABLE-------
+		//	Table table1("Patients",keys);
+		//}
 
-			Column column1("Name","STRING");
-			column1.insertInto(Datum("Mariano"));
-			column1.insertInto(Datum("John"));
-			column1.insertInto(Datum("Kevin"));
+		//TEST_METHOD(FUNCTIONS)
+		//{
+		//	vector<string>keys;
 
-			Table table1("Patients",keys);
-			table1.addColumn(column1);
-			Assert::AreEqual(0,table1.insertInto(data));
-			Assert::AreEqual(CANT_FIT_DATA,table1.insertInto(data2));
-			//Assert::AreEqual(0,table1.insertInto(data2));
+		//	vector<Datum> data;
+		//	data.push_back(Datum("Mariano"));
 
-			//Renaming Unit test
-			Assert::AreEqual(0,table1.renameColumn("Name","Names"));
-			Assert::AreEqual(ATTRIBUTE_NOT_FOUND,table1.renameColumn("Name","Doctors"));
-			Assert::AreNotEqual(0,table1.renameColumn("Name","Doctors"));
-			Assert::AreNotEqual(ATTRIBUTE_NOT_FOUND,table1.renameColumn("Names","Name"));
+		//	vector<Datum> data2;
+		//	data2.push_back(Datum("Mariano"));
+		//	data2.push_back(Datum("John"));
+		//	data2.push_back(Datum("Kevin"));
 
-			/*Selection Unit test, this first part is obsolete, just testing whether 
-			//Contents for column were being copied
-			
-			string name = "Name";
-			string type = "STRING";
-			Column dummy("dummy","dummy");
+		//	Column column1("Name","STRING");
+		//	////column1.insertInto(Datum("Mariano"));
+		//	////column1.insertInto(Datum("John"));
+		//	////column1.insertInto(Datum("Kevin"));
 
-			Column testColumn = table1.selectColumn("Name",dummy);
-			vector<Datum> test(testColumn.getColumnDatum());
+		//	Table table1("Patients",keys);
+		//	table1.addColumn(column1);
+		//	////Assert::AreEqual(0,table1.insertInto(data));
+		//	////Assert::AreEqual(CANT_FIT_DATA,table1.insertInto(data2));
+		//	//Assert::AreEqual(0,table1.insertInto(data2));
 
-			int size = testColumn.getColumnDatum().size();
+		//	//Renaming Unit test
+		//	////Assert::AreEqual(0,table1.renameColumn("Name","Names"));
+		//	////Assert::AreEqual(ATTRIBUTE_NOT_FOUND,table1.renameColumn("Name","Doctors"));
+		//	////Assert::AreNotEqual(0,table1.renameColumn("Name","Doctors"));
+		//	////Assert::AreNotEqual(ATTRIBUTE_NOT_FOUND,table1.renameColumn("Names","Name"));
 
-			Assert::AreEqual(name,testColumn.getColumnName());
-			Assert::AreEqual(type,testColumn.getColumnType());
-			Assert::AreEqual(name,test[1].getName());
-			Assert::AreEqual(4,size);
-			*/
-			//Still Selection Unit Test
+		//	/*Selection Unit test, this first part is obsolete, just testing whether 
+		//	//Contents for column were being copied
+		//	
+		//	string name = "Name";
+		//	string type = "STRING";
+		//	Column dummy("dummy","dummy");
 
-			string name = "Name";
-			string type = "STRING";
-			Column dummy("dummy","dummy");
-			Assert::AreEqual(0,table1.selectColumn("Name",dummy));
-			Assert::AreEqual(ATTRIBUTE_NOT_FOUND,table1.selectColumn("Names",dummy));
-			Assert::AreEqual(name,dummy.getColumnName());
-			Assert::AreEqual(type,dummy.getColumnType());
+		//	Column testColumn = table1.selectColumn("Name",dummy);
+		//	vector<Datum> test(testColumn.getColumnDatum());
 
-		}
+		//	int size = testColumn.getColumnDatum().size();
+
+		//	Assert::AreEqual(name,testColumn.getColumnName());
+		//	Assert::AreEqual(type,testColumn.getColumnType());
+		//	Assert::AreEqual(name,test[1].getName());
+		//	Assert::AreEqual(4,size);
+		//	*/
+		//	//Still Selection Unit Test
+
+		//	string name = "Name";
+		//	string type = "STRING";
+		//	Column dummy("dummy","dummy");
+		//	////Assert::AreEqual(0,table1.selectColumn("Name",dummy));
+		//	////Assert::AreEqual(ATTRIBUTE_NOT_FOUND,table1.selectColumn("Names",dummy));
+		//	Assert::AreEqual(name,dummy.getColumnName());
+		//	Assert::AreEqual(type,dummy.getColumnType());
+
+		//}
 
 	};
 }

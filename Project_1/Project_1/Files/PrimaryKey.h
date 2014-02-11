@@ -1,16 +1,16 @@
 #ifndef PRIMARY_KEY_H
 #define PRIMARY_KEY_H
 
+#include <vector>
+#include <string>
+#include "Datum.h"
+
+using namespace std;
+
 class PrimaryKey{
-  
-public:
-  
-private:
-
-  string table;
-  vector<string> columnNames;
-  vector<Datum> datumValues;
-
+	string table;
+	vector<string> columnNames;
+	vector<Datum> datumValues;
 };
 
 #endif
