@@ -23,7 +23,6 @@ namespace UnitTest1
 
 			//COLUMN------
 			Column column1("Name","STRING");
-			assertTrue(column1.)
 
 			//TABLE-------
 			Table table1("Patients",keys);
@@ -48,6 +47,10 @@ namespace UnitTest1
 			Assert::AreEqual(CANT_FIT_DATA,table1.insertInto(data2));
 			//Assert::AreEqual(0,table1.insertInto(data2));
 
+			Assert::AreEqual(0,table1.renameColumn("Name","Names"));
+			Assert::AreEqual(ATTRIBUTE_NOT_FOUND,table1.renameColumn("Name","Doctors"));
+			//Fails/Assert::AreEqual(0,table1.renameColumn("Name","Doctors"));
+			//Fails/Assert::AreEqual(ATTRIBUTE_NOT_FOUND,table1.renameColumn("Names","Name"));
 		}
 
 	};

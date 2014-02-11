@@ -41,5 +41,8 @@
     <ClCompile Include="Table.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Column.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

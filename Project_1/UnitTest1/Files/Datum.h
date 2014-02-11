@@ -15,6 +15,8 @@ public:
 	Datum(string s)
 		:name(s),value(0){}
 
+
+
 	string getName() { return name; }
 	double getValue() { return value; }
 

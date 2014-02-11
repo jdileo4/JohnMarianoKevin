@@ -4,6 +4,7 @@
 #include "Column.h"
 
 #define CANT_FIT_DATA	-1
+#define ATTRIBUTE_NOT_FOUND	-2
 
 class Table{
 
@@ -16,6 +17,7 @@ public:
 	void addColumn(Column column) { tableColumn.push_back(column); }
 	
 	int insertInto(vector<Datum> data);
+	int renameColumn(string oldname, string newname);
 
 private:
 
