@@ -16,6 +16,8 @@ public:
 	void addRow(vector<Datum> rowData);
 	void addColumn(Column column) { tableColumn.push_back(column); }
 	
+	int findColumnIndex(string cname);
+	int selectColumn(string cname, Column& rcolumn);
 	int insertInto(vector<Datum> data);
 	int renameColumn(string oldname, string newname);
 

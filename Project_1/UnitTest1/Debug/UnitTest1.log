@@ -1,4 +1,4 @@
-﻿Build started 2/10/2014 8:06:57 PM.
+﻿Build started 2/10/2014 9:54:59 PM.
      1>Project "C:\Users\Mariano\Documents\GitHub\JohnMarianoKevin\Project_1\UnitTest1\UnitTest1.vcxproj" on node 2 (Build target(s)).
        Project file contains ToolsVersion="12.0". This toolset may be unknown or missing, in which case you may be able to resolve this by installing the appropriate version of MSBuild, or the build may have been forced to a particular ToolsVersion for policy reasons. Treating the project as if it had ToolsVersion="4.0". For more information, please see http://go.microsoft.com/fwlink/?LinkId=291333.
      1>ClCompile:
@@ -9,9 +9,10 @@
          Debug\stdafx.obj
          Debug\Table.obj
          Debug\unittest1.obj
+            Creating library C:\Users\Mariano\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.lib and object C:\Users\Mariano\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.exp
          UnitTest1.vcxproj -> C:\Users\Mariano\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.dll
      1>Done Building Project "C:\Users\Mariano\Documents\GitHub\JohnMarianoKevin\Project_1\UnitTest1\UnitTest1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.35
+Time Elapsed 00:00:02.39
