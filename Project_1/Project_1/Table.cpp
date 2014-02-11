@@ -10,6 +10,7 @@ void Table::addRow(vector<Datum> data){
 	}
 }
 
+//type should be either "string" or "number"
 void Table::addColumn(string name, string type){
 	Column* newCol = new Column(name, type);
 

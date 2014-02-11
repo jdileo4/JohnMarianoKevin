@@ -27,9 +27,6 @@
     <ClInclude Include="Files\Datum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Files\Table.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

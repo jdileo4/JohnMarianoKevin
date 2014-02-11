@@ -10,9 +10,38 @@ void Engine::createEntityTable(string name, vector<string> keyCol){
 }
 
 void Engine::createRelationTable(string name, string table1, string table2){
-	//Not sure whats going on here; need to talk about this
+	vector<string> keyColumns;
+
+	for (int i = 0; i < entityTables.size(); i++){
+		if ( entityTables.at(i).getName() == table1){
+			for (int j = 0; j < entityTables.at(i).getKeys().size(); j++){
+				keyColumns.push_back(entityTables.at(i).getKeys.at(j));
+			}
+		}
+	}
+	for (int i = 0; i < entityTables.size(); i++){
+		if ( entityTables.at(i).getName() == table2){
+			for (int j = 0; j < entityTables.at(i).getKeys().size(); j++){
+				keyColumns.push_back(entityTables.at(i).getKeys.at(j));
+			}
+		}
+	}
+
+	Table result = Table(name, keyColumns);
+	for (int i = 0; i < keyColumns.size(); i++){
+		if (isInteger(keyColumns.at(i))){
+			result.addColumn(keyColumns.at(i), "number");
+		}
+		else{
+			result.addColumn(keyColumns.at(i), "string");
+		}
+	}
+
+	relationTables.push_back(result);
+
 }
 
+//type should be either "string" or "number"
 void Engine::addAttribute(string tableName, string colName, string type){
 	int i = 0;
 	while(entityTables[i].getName() != tableName) i++;
@@ -104,4 +133,14 @@ void Engine::removeTable(string tableName){
 	while(entityTables[i].getName() != tableName) i++;
 
 	entityTables.erase(entityTables.begin()+i);
+}
+
+bool Table::isInteger(const std::string & s)
+{
+   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
+
+   char * p ;
+   strtol(s.c_str(), &p, 10) ;
+
+   return (*p == 0) ;
 }

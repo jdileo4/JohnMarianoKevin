@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include "Engine.h"
+#include <vector>
+#include "CppUnitTestAssert.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -8,7 +11,44 @@ namespace UnitTest1
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-		
+		TEST_METHOD(createEntityTable){
+			Engine engine = Engine();
+			
+			vector<string> twoKeyColumns;
+			twoKeyColumns.push_back("one");
+			twoKeyColumns.push_back("two");
+
+			engine.createEntityTable("table1", twoKeyColumns);
+			Assert::AreEqual(engine.entityTables[0].getKeys().at(0).c_str(), "one");
+			Assert::AreEqual(engine.entityTables[0].getKeys().at(1).c_str(), "two");
+			Assert::AreEqual(engine.entityTables[0].getName().c_str(), "table1");
+		}
+
+		//depends on success of createEntityTable test
+		TEST_METHOD(addAttribute){
+			Engine engine = Engine();
+			//make table to test
+			vector<string> twoKeyColumns;
+			twoKeyColumns.push_back("one");
+			twoKeyColumns.push_back("two");
+
+			engine.createEntityTable("table1", twoKeyColumns);
+			
+			engine.addAttribute("table1", "one", "string");
+			engine.addAttribute("table1", "two", "string");
+			engine.addAttribute("table1", "threeValue", "number");
+
+
+			Assert::AreEqual(engine.entityTables.at(0).getColumns().at(0).getName().c_str(), "one");
+			Assert::AreEqual(engine.entityTables.at(0).getColumns().at(1).getName().c_str(), "two");
+			Assert::AreEqual(engine.entityTables.at(0).getColumns().at(2).getName().c_str(), "threeValue");
+
+			Assert::AreEqual(engine.entityTables.at(0).getColumns().at(0).getType().c_str(), "string");
+			Assert::AreEqual(engine.entityTables.at(0).getColumns().at(1).getType().c_str(), "string");
+			Assert::AreEqual(engine.entityTables.at(0).getColumns().at(2).getType().c_str(), "number");
+		}
+
+		TEST_METHOD(
 
 
 
