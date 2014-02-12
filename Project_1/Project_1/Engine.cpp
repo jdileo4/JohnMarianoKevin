@@ -5,8 +5,8 @@
 using namespace std;
 
 void Engine::createEntityTable(string name, vector<string> keyCol){
-	Table* entityTable = new Table(name, keyCol);
-	entityTables.push_back(*entityTable);
+	Table entityTable = Table(name, keyCol);
+	entityTables.push_back(entityTable);
 }
 
 void Engine::createRelationTable(string name, string table1, string table2){
@@ -331,4 +331,14 @@ Table Engine::naturalJoin(string joinName, Table table1, Table table2){
 	njTable.updateColumns(newCols);
 
 	return njTable;
+}
+
+bool Engine::isInteger(const std::string & s)
+{
+   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
+
+   char * p ;
+   strtol(s.c_str(), &p, 10) ;
+
+   return (*p == 0) ;
 }

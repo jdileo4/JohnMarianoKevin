@@ -5,22 +5,30 @@
 #include <iostream>
 #include <vector>
 
+const int UNINITIALIZED = -1;
+
 using namespace std;
 
 class Datum{
 private:
 	string name;
-	double value;
+	int value;
 
 public:
-	Datum(double v) : value(v){}
-	Datum(string s) : name(s) {}
+	Datum(int v) : value(v){
+		name = "";
+	}
+	Datum(string s) : name(s) {
+		value = UNINITIALIZED;
+	}
 
 	string getName() { return name; }
-	double getValue() { return value; }
+	int getValue() { return value; }
 
 	void setName(string s) { name = s; }
-	void setValue(double v) { value = v; }
+	void setValue(int v) { value = v; }
+
+	string toString();
 };
 
 #endif

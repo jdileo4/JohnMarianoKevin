@@ -43,7 +43,8 @@ public:
 	vector<Table> entityTables;
 	vector<Table> relationTables;
 private:
-	bool isInteger(const std::string & s);
+	//helper, credit to stackoverflow user
+	bool isInteger(const string & s);
 };
 
 #endif
