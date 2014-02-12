@@ -48,7 +48,6 @@ namespace UnitTest1
 			Assert::AreEqual(engine.entityTables.at(0).getColumns().at(2).getType().c_str(), "number");
 		}
 
-		TEST_METHOD(
 
 
 

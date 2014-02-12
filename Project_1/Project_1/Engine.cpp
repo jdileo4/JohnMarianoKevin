@@ -15,14 +15,14 @@ void Engine::createRelationTable(string name, string table1, string table2){
 	for (int i = 0; i < entityTables.size(); i++){
 		if ( entityTables.at(i).getName() == table1){
 			for (int j = 0; j < entityTables.at(i).getKeys().size(); j++){
-				keyColumns.push_back(entityTables.at(i).getKeys.at(j));
+				keyColumns.push_back(entityTables.at(i).getKeys().at(j));
 			}
 		}
 	}
 	for (int i = 0; i < entityTables.size(); i++){
 		if ( entityTables.at(i).getName() == table2){
 			for (int j = 0; j < entityTables.at(i).getKeys().size(); j++){
-				keyColumns.push_back(entityTables.at(i).getKeys.at(j));
+				keyColumns.push_back(entityTables.at(i).getKeys().at(j));
 			}
 		}
 	}
@@ -135,7 +135,7 @@ void Engine::removeTable(string tableName){
 	entityTables.erase(entityTables.begin()+i);
 }
 
-bool Table::isInteger(const std::string & s)
+bool Engine::isInteger(const std::string & s)
 {
    if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
 
