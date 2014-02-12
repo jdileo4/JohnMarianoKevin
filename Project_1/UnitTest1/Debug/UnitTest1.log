@@ -1,16 +1,24 @@
-﻿Build started 2/11/2014 6:31:07 PM.
-     1>Project "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\UnitTest1\UnitTest1.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\UnitTest\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\UnitTest1.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /FC /errorReport:prompt unittest1.cpp
-         unittest1.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\UnitTest1.dll" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\UnitTest\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\UnitTest1.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\UnitTest1.lib" /MACHINE:X86 /DLL Debug\stdafx.obj
+﻿Build started 2/11/2014 7:19:34 PM.
+     1>Project "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\UnitTest1\UnitTest1.vcxproj" on node 2 (Build target(s)).
+       Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
+     1>Project "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\UnitTest1\UnitTest1.vcxproj" (1) is building "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Project_1\Project_1.vcxproj" (2) on node 2 (GetTargetPath target(s)).
+       Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
+     2>Done Building Project "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Project_1\Project_1.vcxproj" (GetTargetPath target(s)).
+     1>Project "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\UnitTest1\UnitTest1.vcxproj" (1) is building "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Project_1\Project_1.vcxproj" (2:2) on node 2 (GetNativeManifest target(s)).
+       Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
+     2>Done Building Project "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Project_1\Project_1.vcxproj" (GetNativeManifest target(s)).
+     1>Project "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\UnitTest1\UnitTest1.vcxproj" (1) is building "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Project_1\Project_1.vcxproj" (2:3) on node 2 (GetResolvedLinkLibs target(s)).
+       Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
+     2>Done Building Project "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Project_1\Project_1.vcxproj" (GetResolvedLinkLibs target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.dll" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\UnitTest\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.lib" /MACHINE:X86 /DLL Debug\stdafx.obj
          Debug\unittest1.obj
-         "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\Project_1.lib"
-            Creating library C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\UnitTest1.lib and object C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\UnitTest1.exp
-         UnitTest1.vcxproj -> C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\UnitTest1.dll
-     1>Done Building Project "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\UnitTest1\UnitTest1.vcxproj" (Build target(s)).
+         C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\Project_1.lib
+            Creating library C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.lib and object C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.exp
+     1>Project_1.lib(Engine.obj) : error LNK2019: unresolved external symbol "private: bool __thiscall Engine::isInteger(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?isInteger@Engine@@AAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) referenced in function "public: void __thiscall Engine::createRelationTable(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?createRelationTable@Engine@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@00@Z)
+     1>C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\Debug\UnitTest1.dll : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "C:\Users\KEVIN\Documents\GitHub\JohnMarianoKevin\Project_1\UnitTest1\UnitTest1.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.60
+Time Elapsed 00:00:00.22

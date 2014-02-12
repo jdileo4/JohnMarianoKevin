@@ -20,7 +20,10 @@ public:
 	string getName() { return name; }
 	int getID() { return id; }
 	vector<Column> getColumns() { return columns; }
-	vector<string> getKeys() { return keys; }
+	vector<string> getKeys() { return keys; } 
+
+	void updateColumns(vector<Column> newColumns) { columns  = newColumns; }
+	void updateKeys(vector<string> newKeys) { keys = newKeys; }
 
 	void addRow(vector<Datum> rowData);
 	//type should be either "string" or "number"

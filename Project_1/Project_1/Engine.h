@@ -21,14 +21,21 @@ public:
 	void createRelationTable(string name, string table1, string table2);
 
 	//add a row to a particular table.  Parser assembles rowData to pass.
-	void addEntity(string tableName, vector<Datum> rowData);
+	void insertInto(string tableName, vector<Datum> rowData);
 
 	//TODO make condVal and newVal void pointers and dereference them where
 	//necessary in the implementation
 	void updateEntity(string tableName, string att, int newVal, string cond, int condVal);
 	void deleteFrom(string tableName, string att, string cond, int condVal);
 
-	Column selection();
+	Table selection(Table initTable, string seleTable, string att, string cond, int condVal);
+	Table projection(Table initTable, string projTable, string att);
+	Table rename(Table initTable, string reTable, vector<string> newAtt);
+
+	Table setUnion(string unionName, Table table1, Table table2);
+	Table setDifference(string diffName, Table table1, Table table2);
+	Table crossProduct(string crossName, Table table1, Table table2);
+	Table naturalJoin(string joinName, Table table1, Table table2);
 
 	void removeTable(string tableName);
 	

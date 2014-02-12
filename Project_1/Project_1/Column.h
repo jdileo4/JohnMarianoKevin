@@ -17,8 +17,10 @@ public:
 	string getType() { return type; }
 	vector<Datum> getData() { return data; }
 
+	void updateName(string newName) { name = newName; }
+
 	void changeData(Datum newData, int id){ data[id] = newData; }
-	void updateData(Datum newData){ data.push_back(newData); }
+	void addData(Datum newData){ data.push_back(newData); }
 };
 
 #endif
