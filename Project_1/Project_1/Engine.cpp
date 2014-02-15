@@ -9,6 +9,14 @@ void Engine::createEntityTable(string name, vector<string> keyCol){
 	entityTables.push_back(entityTable);
 }
 
+//type should be either "string" or "number"
+void Engine::addAttribute(string tableName, string colName, string type){
+	int i = 0;
+	while(entityTables[i].getName() != tableName) i++;
+
+	entityTables[i].addColumn(colName, type);
+}
+
 void Engine::createRelationTable(string name, string table1, string table2){
 	vector<string> keyColumns;
 
@@ -41,19 +49,11 @@ void Engine::createRelationTable(string name, string table1, string table2){
 
 }
 
-//type should be either "string" or "number"
 void Engine::removeTable(string tableName){
 	int i = 0;
 	while(entityTables[i].getName() != tableName) i++;
 
 	entityTables.erase(entityTables.begin()+i);
-}
-
-void Engine::addAttribute(string tableName, string colName, string type){
-	int i = 0;
-	while(entityTables[i].getName() != tableName) i++;
-
-	entityTables[i].addColumn(colName, type);
 }
 
 void Engine::insertInto(string tableName, vector<Datum> rowData){
@@ -65,8 +65,8 @@ void Engine::insertInto(string tableName, vector<Datum> rowData){
 
 void Engine::updateEntity(string tableName, string att, int newVal, string cond, int condVal){
 	int i = 0, j = 0;
-	while(entityTables[i].getName() != tableName) i++;
-	while(entityTables[i].getColumns()[j].getName() != att) j++;
+	while(entityTables[i].getName() != tableName) i++;  //finds table
+	while(entityTables[i].getColumns()[j].getName() != att) j++; //finds column
 
 	int dataSize = entityTables[i].getColumns()[j].getData().size();
 	vector<Datum> tempData = entityTables[i].getColumns()[j].getData();
@@ -74,27 +74,27 @@ void Engine::updateEntity(string tableName, string att, int newVal, string cond,
 	if(cond == ">"){
 		for(int k = 0; k < dataSize; k++){
 			if(tempData[k].getValue() > condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(newVal);
-		}
+				entityTables[i].columns[j].changeData(Datum(newVal), k);		}
 	} else if(cond == "<"){
 		for(int k = 0; k < dataSize; k++){
 			if(tempData[k].getValue() < condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(newVal);
+				//entityTables[i].getColumns()[j].changeData(Datum(newVal), k);
+				entityTables[i].columns[j].changeData(Datum(newVal), k);
 		}
 	} else if(cond == "=="){
 		for(int k = 0; k < dataSize; k++){
 			if(tempData[k].getValue() == condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(newVal);
+				entityTables[i].columns[j].changeData(Datum(newVal), k);		
 		}
 	} else if(cond == ">="){
 		for(int k = 0; k < dataSize; k++){
 			if(tempData[k].getValue() >= condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(newVal);
+				entityTables[i].columns[j].changeData(Datum(newVal), k);
 		}
 	} else if(cond == "<="){
 		for(int k = 0; k < dataSize; k++){
 			if(tempData[k].getValue() <= condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(newVal);
+				entityTables[i].columns[j].changeData(Datum(newVal), k);
 		}
 	}
 }

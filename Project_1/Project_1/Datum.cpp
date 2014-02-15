@@ -9,6 +9,6 @@ string Datum::toString(){
 		return name;
 	}
 	else{
-		return "Error: Datum never initialized";
+		return "NO VALUE";
 	}
 }

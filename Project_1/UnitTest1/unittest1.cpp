@@ -13,7 +13,7 @@ namespace UnitTest1
 	public:
 		TEST_METHOD(createEntityTable){
 			Engine engine = Engine();
-			
+
 			vector<string> twoKeyColumns;
 			twoKeyColumns.push_back("one");
 			twoKeyColumns.push_back("two");
@@ -109,6 +109,21 @@ namespace UnitTest1
 				"thirty");
 		}
 
+		TEST_METHOD(removeTable){
+			//
+			Engine engine = Engine();
+			
+			vector<string> twoKeyColumns;
+			twoKeyColumns.push_back("one");
+			twoKeyColumns.push_back("two");
+
+			engine.createEntityTable("table1", twoKeyColumns);
+			Assert::AreEqual(1, (int)engine.entityTables.size());
+
+			engine.removeTable("table1");
+			Assert::AreEqual(0, (int)engine.entityTables.size());
+		}
+
 		TEST_METHOD(insertInto){
 			Engine engine = Engine();
 			//make table to test
@@ -153,89 +168,102 @@ namespace UnitTest1
 				getData().at(1).
 				toString().c_str(), 
 				"column 1, row 1");
-
 		}
 
+		TEST_METHOD(updateEntity){
+			Engine engine = Engine();
+			//make table to test
+			vector<string> twoKeyColumns;
+			twoKeyColumns.push_back("one");
+			twoKeyColumns.push_back("two");
+
+			engine.createEntityTable("table1", twoKeyColumns);
+			
+			engine.addAttribute("table1", "one", "string");
+			engine.addAttribute("table1", "two", "string");
+			engine.addAttribute("table1", "threeValue", "number");
 
 
+			//make rows to insert into table (string, string, number)
+			vector<Datum> rowData1;
+			rowData1.push_back(Datum("column 0, row 0"));
+			rowData1.push_back(Datum("column 1, row 0"));
+			rowData1.push_back(Datum(20));
+
+			vector<Datum> rowData2;
+			rowData2.push_back(Datum("column 0, row 1"));
+			rowData2.push_back(Datum("column 1, row 1"));
+			rowData2.push_back(Datum(21));
+
+			engine.insertInto("table1", rowData1);
+			engine.insertInto("table1", rowData2);
+
+			//TODO
+			//engine.updateEntity("table1", "one", "newValue", "==", "column 0, row 0");
+			//Assert::AreEqual
+			//engine.updateEntity("table1", "two", "newValue", "==", "inequivalent");
+			//Assert::Arenotequal
+
+			engine.updateEntity("table1", "threeValue", 5, "<", 21);
+			//should make threevalue {5, 21}
+			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 0).c_str(), "5");
+
+			engine.updateEntity("table1", "threeValue", 1, "<=", 5);
+			//should make {1, 21}
+			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 0).c_str(), "1");
+
+			engine.updateEntity("table1", "threeValue", 10, "==", 21);
+			//should make {1, 10}
+			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 1).c_str(), "10");
+
+			engine.updateEntity("table1", "threeValue", 5, ">=", 10);
+			//should make {1, 5}
+			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 1).c_str(), "5");
+
+			engine.updateEntity("table1", "threeValue", 30, ">", 0);
+			//should make {30, 30}
+			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 0).c_str(), "30");
+			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 1).c_str(), "30");
+		}
+
+		TEST_METHOD(deleteFrom){
+			Engine engine = Engine();
+			//make table to test
+			vector<string> twoKeyColumns;
+			twoKeyColumns.push_back("one");
+			twoKeyColumns.push_back("two");
+
+			engine.createEntityTable("table1", twoKeyColumns);
+			
+			engine.addAttribute("table1", "one", "string");
+			engine.addAttribute("table1", "two", "string");
+			engine.addAttribute("table1", "threeValue", "number");
 
 
-		//TEST_METHOD(CONSTRUCTORS)
-		//{
-		//	//TEST VARIABLES----
-		//	vector<string>keys;
-		//	keys.push_back("Name");
-		//	keys.push_back("ID");
+			//make rows to insert into table (string, string, number)
+			vector<Datum> rowData1;
+			rowData1.push_back(Datum("column 0, row 0"));
+			rowData1.push_back(Datum("column 1, row 0"));
+			rowData1.push_back(Datum(20));
 
-		//	//DATUM-------
-		//	Datum datum1(100.00);
-		//	Datum datum2("Fred");
-		//	Datum datum3(100);
+			vector<Datum> rowData2;
+			rowData2.push_back(Datum("column 0, row 1"));
+			rowData2.push_back(Datum("column 1, row 1"));
+			rowData2.push_back(Datum(21));
 
-		//	//COLUMN------
-		//	Column column1("Name","STRING");
+			engine.insertInto("table1", rowData1);
+			engine.insertInto("table1", rowData2);
+			
+			Assert::AreEqual(engine.entityTables.at(0).
+				getColumns().at(1).
+				getData().at(1).
+				toString().c_str(), 
+				"column 1, row 1");
+			
+			engine.deleteFrom("table1", "two", "==", "column 1, 
 
-		//	//TABLE-------
-		//	Table table1("Patients",keys);
-		//}
 
-		//TEST_METHOD(FUNCTIONS)
-		//{
-		//	vector<string>keys;
-
-		//	vector<Datum> data;
-		//	data.push_back(Datum("Mariano"));
-
-		//	vector<Datum> data2;
-		//	data2.push_back(Datum("Mariano"));
-		//	data2.push_back(Datum("John"));
-		//	data2.push_back(Datum("Kevin"));
-
-		//	Column column1("Name","STRING");
-		//	////column1.insertInto(Datum("Mariano"));
-		//	////column1.insertInto(Datum("John"));
-		//	////column1.insertInto(Datum("Kevin"));
-
-		//	Table table1("Patients",keys);
-		//	table1.addColumn(column1);
-		//	////Assert::AreEqual(0,table1.insertInto(data));
-		//	////Assert::AreEqual(CANT_FIT_DATA,table1.insertInto(data2));
-		//	//Assert::AreEqual(0,table1.insertInto(data2));
-
-		//	//Renaming Unit test
-		//	////Assert::AreEqual(0,table1.renameColumn("Name","Names"));
-		//	////Assert::AreEqual(ATTRIBUTE_NOT_FOUND,table1.renameColumn("Name","Doctors"));
-		//	////Assert::AreNotEqual(0,table1.renameColumn("Name","Doctors"));
-		//	////Assert::AreNotEqual(ATTRIBUTE_NOT_FOUND,table1.renameColumn("Names","Name"));
-
-		//	/*Selection Unit test, this first part is obsolete, just testing whether 
-		//	//Contents for column were being copied
-		//	
-		//	string name = "Name";
-		//	string type = "STRING";
-		//	Column dummy("dummy","dummy");
-
-		//	Column testColumn = table1.selectColumn("Name",dummy);
-		//	vector<Datum> test(testColumn.getColumnDatum());
-
-		//	int size = testColumn.getColumnDatum().size();
-
-		//	Assert::AreEqual(name,testColumn.getColumnName());
-		//	Assert::AreEqual(type,testColumn.getColumnType());
-		//	Assert::AreEqual(name,test[1].getName());
-		//	Assert::AreEqual(4,size);
-		//	*/
-		//	//Still Selection Unit Test
-
-		//	string name = "Name";
-		//	string type = "STRING";
-		//	Column dummy("dummy","dummy");
-		//	////Assert::AreEqual(0,table1.selectColumn("Name",dummy));
-		//	////Assert::AreEqual(ATTRIBUTE_NOT_FOUND,table1.selectColumn("Names",dummy));
-		//	Assert::AreEqual(name,dummy.getColumnName());
-		//	Assert::AreEqual(type,dummy.getColumnType());
-
-		//}
-
+		}
 	};
 }
+

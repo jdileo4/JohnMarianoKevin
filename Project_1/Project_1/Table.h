@@ -11,9 +11,10 @@ private:
 	string name;
 
 	vector<string> keys;
+public:
+	//TODO: add get and set
 	vector<Column> columns;
 
-public:
 	Table(string tableName, vector<string> tableKeys)
 		: name(tableName), keys(tableKeys){}
 
@@ -28,6 +29,7 @@ public:
 	void addRow(vector<Datum> rowData);
 	//type should be either "string" or "number"
 	void addColumn(string name, string type);
+	string getDatum(int column, int row);
 };
 
 #endif

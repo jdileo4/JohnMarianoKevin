@@ -16,3 +16,7 @@ void Table::addColumn(string name, string type){
 
 	columns.push_back(newCol);
 }
+
+string Table::getDatum(int column, int row){
+	return columns.at(column).getData().at(row).toString();
+}
