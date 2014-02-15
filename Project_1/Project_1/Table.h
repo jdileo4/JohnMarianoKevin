@@ -12,7 +12,7 @@ private:
 
 	vector<string> keys;
 public:
-	//TODO: add get and set
+	//TODO: make private
 	vector<Column> columns;
 
 	Table(string tableName, vector<string> tableKeys)
@@ -25,8 +25,12 @@ public:
 
 	void updateColumns(vector<Column> newColumns) { columns  = newColumns; }
 	void updateKeys(vector<string> newKeys) { keys = newKeys; }
+	void updateValue(int columnIndex, int rowIndex, int newValue);
+	void deleteValue(int columnIndex, int rowIndex);
 
-	void addRow(vector<Datum> rowData);
+	//returns 0 if success, 1 if rowData is too big to fit in table
+	int addRow(vector<Datum> rowData);
+
 	//type should be either "string" or "number"
 	void addColumn(string name, string type);
 	string getDatum(int column, int row);

@@ -260,7 +260,8 @@ namespace UnitTest1
 				toString().c_str(), 
 				"column 1, row 1");
 			
-			engine.deleteFrom("table1", "two", "==", "column 1, 
+			engine.deleteFrom("table1", "two", "==", "column 1, row 1");
+			//assert "column 1, row 1" doesn't exist
 
 
 		}

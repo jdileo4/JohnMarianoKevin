@@ -16,7 +16,7 @@ private:
 
 public:
 	Datum(int v) : value(v){
-		name = "";
+		name = UNINITIALIZED;
 	}
 	Datum(string s) : name(s) {
 		value = UNINITIALIZED;

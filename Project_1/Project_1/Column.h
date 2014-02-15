@@ -17,9 +17,11 @@ public:
 	string getType() { return type; }
 	vector<Datum> getData() { return data; }
 
-	void updateName(string newName) { name = newName; }
+	void setName(string newName) { name = newName; }
+	void setData(vector<Datum> data) { this->data = data; }
 
-	void changeData(Datum newData, int id){ data[id] = newData; }
+	void updateData(Datum newData, int index){ data[index] = newData; }
+
 	void addData(Datum newData){ data.push_back(newData); }
 };
 

@@ -56,11 +56,13 @@ void Engine::removeTable(string tableName){
 	entityTables.erase(entityTables.begin()+i);
 }
 
-void Engine::insertInto(string tableName, vector<Datum> rowData){
+int Engine::insertInto(string tableName, vector<Datum> rowData){
+	int errorCode;
 	int i = 0;
 	while(entityTables[i].getName() != tableName) i++;
 
-	entityTables[i].addRow(rowData);
+	errorCode = entityTables[i].addRow(rowData);
+	return errorCode;
 }
 
 void Engine::updateEntity(string tableName, string att, int newVal, string cond, int condVal){

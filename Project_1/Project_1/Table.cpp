@@ -4,10 +4,18 @@
 
 using namespace std;
 
-void Table::addRow(vector<Datum> data){
-	for(int i = 0; i < columns.size(); i++){
-		columns[i].addData(data[i]);
+int Table::addRow(vector<Datum> data){
+	int errorCode = -1;
+	if (data.size() == columns.size()){
+		for(int i = 0; i < columns.size(); i++){
+			columns[i].addData(data[i]);
+		}
+		errorCode = 0;
 	}
+	else{
+		errorCode = 1;
+	}
+	return errorCode;
 }
 
 //type should be either "string" or "number"
@@ -19,4 +27,12 @@ void Table::addColumn(string name, string type){
 
 string Table::getDatum(int column, int row){
 	return columns.at(column).getData().at(row).toString();
+}
+
+void Table::updateValue(int columnIndex, int rowIndex, int newValue){
+	//TODO
+}
+
+void Table::deleteValue(int columnIndex, int rowIndex){
+	columns[columnIndex].updateData(Datum(), 
 }

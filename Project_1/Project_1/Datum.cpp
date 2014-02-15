@@ -2,11 +2,11 @@
 #include "Datum.h"
 
 string Datum::toString(){
-	if (name == ""){
-		return std::to_string(value);
-	}
-	else if (value == UNINITIALIZED){
+	if (name != ""){
 		return name;
+	}
+	else if (value != UNINITIALIZED){
+		return std::to_string(value);
 	}
 	else{
 		return "NO VALUE";
