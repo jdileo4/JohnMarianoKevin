@@ -10,6 +10,9 @@ class Engine{
 
 public:
 
+	//FindTable based on the name
+	int FindTable(string tname);
+
 	//only create an empty table with name and keyCol.  Parser
 	//will create table then add addributes.
 	void createEntityTable(string name, vector<string> keyCol);
