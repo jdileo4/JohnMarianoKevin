@@ -239,10 +239,51 @@ int saveToTable(vector<string> operations){
 
 }
 
-int queryType(vector<string> operations){
+int queryType(int index, vector<string> operations){
 
 
-	return 0;
+	string tableName = operations[0];
+	string instruction = operations[index];
+	string attribute;
+	string attributeName;
+	string operation;
+	string othertablename;
+
+	// select (kind == "dog") select (kind == "food ) animals;
+	// dogs + (select (kind == "cat") animals);
+	// common_names <- project (name) (select (aname == name && akind != kind) (a * animals));
+
+	//Check if instruction is an operation or an attributeName
+	if( instruction == "select" ){
+
+		attribute = operations[index+1];
+		operation = operations[index+2];
+		attributeName = operations[index+3];
+		othertablename = queryType(index+4,operations);
+		
+		int tIndex = engine.FindTable(othertablename);
+
+		engine.entityTables.push_back(engine.selection(engine.entityTables[tIndex],tableName,attribute,operation,0));
+		
+		return tableName;
+		
+	}
+
+	else if( instruction == "project" ){
+
+
+	}
+
+	else if( instruction == "rename" ){
+
+
+	}
+
+	//else its an attribute name
+	else{
+
+		return instruction;
+	}
 }
 
 int showTable(vector<string> operations){
