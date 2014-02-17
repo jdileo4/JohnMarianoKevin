@@ -1,3 +1,4 @@
+#include "Token.h"
 #include "Engine.h"
 #include <vector>
 #include <iostream>
@@ -7,6 +8,8 @@
 //TODO: 
 #define TYPE_ERROR			-1
 #define CANT_FIND_TABLE		-21
+
+Engine engine;
 
 bool isInteger(const string & s)
 {
@@ -239,6 +242,62 @@ int saveToTable(vector<string> operations){
 
 }
 
+//UPDATE Random SET (Color = 20) WHERE (Color < 5) 
+int updateTable(vector<string> operations){
+
+	string tableName = operations[1];
+
+	string attributeName = operations[3];
+
+	string condition = operations[8];
+
+	if( isInteger(operations[4]) ){
+
+		int newValue = atoi(operations[5].c_str());
+
+		if( isInteger(operations[9]) ){
+		
+			int condValue = atoi(operations[9].c_str());
+		}
+	}
+
+	else{
+
+		string newValue = operations[5];
+		string condValue = operations[9];
+	}
+
+	//engine.updateEntity(tableName,attributeName,newValue,condition,condValue);
+
+	return 0;
+
+}
+
+//DELETE FROM relation-Name Where (Color < 5)
+int deleteFrom(vector<string> operations){
+
+	string tableName = operations[2];
+
+	string attributeName = operations[4];
+
+	string condition = operations[5];
+
+	if( isInteger(operations[6]) ){
+		
+		int condValue = atoi(operations[6].c_str());
+	}
+	
+	else{
+
+		string condValue = operations[6];
+	}
+
+	//engine.deleteFrom(tableName,attributeName,condition,condValue);
+
+	return 0;
+
+}
+
 string queryType(int index,vector<string> operations){
 
 	string tableName = operations[0];
@@ -301,7 +360,7 @@ string queryType(int index,vector<string> operations){
 	}
 
 	//Check if its an operation like +, *
-	else if( index+1 < operations.size() ){
+	else if( index+2 < operations.size() ){
 
 		//Atomic expression + Atomic expression
 		if( operations[index+1] == "+" ){
@@ -310,7 +369,7 @@ string queryType(int index,vector<string> operations){
 
 			if( t1Index == -21 ){
 
-				return NULL;
+				return "Error";
 			}
 
 			othertablename = queryType(index+1,operations);
@@ -319,7 +378,7 @@ string queryType(int index,vector<string> operations){
 
 			if( t2Index == -21) {
 
-				return NULL;
+				return "Error";
 			}
 
 			//engine.setUnion(tableName,engine.entityTables[t1Index],engine.entityTables[t2Index]);
@@ -333,7 +392,7 @@ string queryType(int index,vector<string> operations){
 
 			if( t1Index == -21 ){
 
-				return NULL;
+				return "Error";
 			}
 
 			othertablename = queryType(index+1,operations);
@@ -342,7 +401,7 @@ string queryType(int index,vector<string> operations){
 
 			if( t2Index == -21) {
 
-				return NULL;
+				return "Error";
 			}
 
 			//engine.setDifference(tableName,engine.entityTables[t1Index],engine.entityTables[t2Index]);
@@ -357,7 +416,7 @@ string queryType(int index,vector<string> operations){
 
 			if( t1Index == -21 ){
 
-				return NULL;
+				return "Error";
 			}
 
 			othertablename = queryType(index+1,operations);
@@ -366,7 +425,7 @@ string queryType(int index,vector<string> operations){
 
 			if( t2Index == -21) {
 
-				return NULL;
+				return "Error";
 			}
 
 			//engine.crossProduct(tableName,engine.entityTables[t1Index],engine.entityTables[t2Index]);
@@ -380,7 +439,7 @@ string queryType(int index,vector<string> operations){
 
 			if( t1Index == -21 ){
 
-				return NULL;
+				return "Error";
 			}
 
 			othertablename = queryType(index+1,operations);
@@ -389,7 +448,7 @@ string queryType(int index,vector<string> operations){
 
 			if( t2Index == -21) {
 
-				return NULL;
+				return "Error";
 			}
 
 			//engine.naturalJoin(tableName,engine.entityTables[t1Index],engine.entityTables[t2Index]);
@@ -403,6 +462,62 @@ string queryType(int index,vector<string> operations){
 	else{
 
 		return instruction;
+	}
+
+}
+
+//compare stuff
+Table comparisons(vector<string> operations, int index){
+
+	vector<string> key;
+	string identifier = operations[index];
+
+	if( index + 1 == operations.size() ){
+
+		return Table("Table1",key);
+	}
+
+	string operation = operations[index+1];
+
+	if( operation == ">" ){
+
+
+	}
+
+	else if( operation == "<" ){
+
+	}
+
+	else if( operation == "!=" ){
+
+	}
+	else if( operation == ">=" ){
+
+
+	}
+	else if( operation == "<=" ){
+
+
+	}
+
+	else if( operation == "==" ){
+
+
+	}
+
+	else{
+
+	}
+
+	return Table("TABLE1",key);
+}
+
+string getString(vector<string> operations, int index){
+
+
+	if( index == operations.size() - 1 ){
+
+		return operations[index];
 	}
 
 }
@@ -484,9 +599,20 @@ int Operations(vector<string> operations){
 		showTable(operations);
 	}
 
+	else if( operations[0] == "UPDATE"){
+
+		updateTable(operations);
+	}
+
+	else if( operations[0] == "EXIT"){
+
+		return 1;
+	}
+
 	else if( operations[1] == "<-" ){
 
-		queryType(operations);
+		//Three is how this function should start for query
+		queryType(2,operations);
 	}
 
 	return 0;
@@ -541,7 +667,7 @@ int Parse(string message, vector<string>& command){
 		if( b[b.size()-1] == ',') { b.pop_back();}
 		if( b[b.size()-1] == '"') { b.pop_back();}
 		if( b[b.size()-1] == ')') { b.pop_back();}
-
+		if( b[b.size()-1] == ')') { b.pop_back();}
 		command.push_back(b);
 	}
 
@@ -551,7 +677,7 @@ int Parse(string message, vector<string>& command){
 int main(){
 
 	int b;
-	string message = "OPEN Random;";
+	string message = "OPEN Random2;";
 	vector<string> data;
 
 	//Parse takes the message, parses it and stores the
@@ -562,7 +688,17 @@ int main(){
 	//action based on the operation, i.e. OPEN, SHOW
 	Operations(data);
 
-	message = "SHOW Random;";
+	message = "OPEN Random;";
+	//Parse takes the message, parses it and stores the
+	//individual strings in a vector passed as reference
+	data.clear();
+	Parse(message,data);
+
+	//This function processes the data in vector and does an 
+	//action based on the operation, i.e. OPEN, SHOW
+	Operations(data);
+
+	message = "dogs <- Random + Random2;";
 	data.clear();
 
 	Parse(message,data);
