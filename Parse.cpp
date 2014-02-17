@@ -239,8 +239,7 @@ int saveToTable(vector<string> operations){
 
 }
 
-int queryType(int index, vector<string> operations){
-
+string queryType(int index,vector<string> operations){
 
 	string tableName = operations[0];
 	string instruction = operations[index];
@@ -269,13 +268,134 @@ int queryType(int index, vector<string> operations){
 		
 	}
 
+	// <- project (attributename) | atomic-exp
 	else if( instruction == "project" ){
 
+		attributeName = operations[index+1];
+		
+		othertablename = queryType(index+2,operations);
+
+		int tIndex = engine.FindTable(othertablename);
+
+		engine.entityTables.push_back(engine.projection(engine.entityTables[tIndex],tableName,attributeName));
+
+		return tableName;
 
 	}
 
 	else if( instruction == "rename" ){
 
+		vector<string> data;
+
+		attributeName = operations[index+1];
+		
+		othertablename = queryType(index+2,operations);
+
+		int tIndex = engine.FindTable(othertablename);
+
+		engine.entityTables.push_back(engine.rename(engine.entityTables[tIndex],tableName,data));
+
+		return tableName;
+
+
+	}
+
+	//Check if its an operation like +, *
+	else if( index+1 < operations.size() ){
+
+		//Atomic expression + Atomic expression
+		if( operations[index+1] == "+" ){
+
+			int t1Index = engine.FindTable(instruction);
+
+			if( t1Index == -21 ){
+
+				return NULL;
+			}
+
+			othertablename = queryType(index+1,operations);
+
+			int t2Index = engine.FindTable(othertablename);
+
+			if( t2Index == -21) {
+
+				return NULL;
+			}
+
+			//engine.setUnion(tableName,engine.entityTables[t1Index],engine.entityTables[t2Index]);
+
+			return tableName;
+		}
+
+		else if( instruction == "-"){
+
+			int t1Index = engine.FindTable(instruction);
+
+			if( t1Index == -21 ){
+
+				return NULL;
+			}
+
+			othertablename = queryType(index+1,operations);
+
+			int t2Index = engine.FindTable(othertablename);
+
+			if( t2Index == -21) {
+
+				return NULL;
+			}
+
+			//engine.setDifference(tableName,engine.entityTables[t1Index],engine.entityTables[t2Index]);
+
+			return tableName;
+
+		}
+
+		else if( instruction == "*"){
+
+			int t1Index = engine.FindTable(instruction);
+
+			if( t1Index == -21 ){
+
+				return NULL;
+			}
+
+			othertablename = queryType(index+1,operations);
+
+			int t2Index = engine.FindTable(othertablename);
+
+			if( t2Index == -21) {
+
+				return NULL;
+			}
+
+			//engine.crossProduct(tableName,engine.entityTables[t1Index],engine.entityTables[t2Index]);
+
+			return tableName;
+		}
+
+		else if( instruction == "JOIN"){
+
+			int t1Index = engine.FindTable(instruction);
+
+			if( t1Index == -21 ){
+
+				return NULL;
+			}
+
+			othertablename = queryType(index+1,operations);
+
+			int t2Index = engine.FindTable(othertablename);
+
+			if( t2Index == -21) {
+
+				return NULL;
+			}
+
+			//engine.naturalJoin(tableName,engine.entityTables[t1Index],engine.entityTables[t2Index]);
+
+			return tableName;
+		}
 
 	}
 
@@ -284,6 +404,7 @@ int queryType(int index, vector<string> operations){
 
 		return instruction;
 	}
+
 }
 
 int showTable(vector<string> operations){
