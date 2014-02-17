@@ -4,6 +4,25 @@
 
 using namespace std;
 
+//Use this one instead of the while(...)i++
+int Engine::FindTable(string tname){
+
+	int index = -21;
+
+	for(int i = 0; i < entityTables.size(); i++ ){
+
+		if( entityTables[i].getName() == tname ){
+
+			index = i;
+			return index;
+		}
+
+	}
+
+	return index;
+
+}
+
 void Engine::createEntityTable(string name, vector<string> keyCol){
 	Table entityTable = Table(name, keyCol);
 	entityTables.push_back(entityTable);
