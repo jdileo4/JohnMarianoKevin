@@ -9,8 +9,6 @@ using namespace std;
 class Engine{
 
 public:
-
-	//FindTable based on the name
 	int FindTable(string tname);
 
 	//only create an empty table with name and keyCol.  Parser
@@ -24,11 +22,10 @@ public:
 	void createRelationTable(string name, string table1, string table2);
 
 	//add a row to a particular table.  Parser assembles rowData to pass.
-	void insertInto(string tableName, vector<Datum> rowData);
+	int insertInto(string tableName, vector<Datum> rowData);
 
-	//TODO make condVal and newVal void pointers and dereference them where
-	//necessary in the implementation
-	void updateEntity(string tableName, string att, int newVal, string cond, int condVal);
+
+	int updateEntity(string tableName, string att, void* newVal, string cond, void* condVal);
 	void deleteFrom(string tableName, string att, string cond, int condVal);
 
 	Table selection(Table initTable, string seleTable, string att, string cond, int condVal);

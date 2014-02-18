@@ -29,10 +29,23 @@ string Table::getDatum(int column, int row){
 	return columns.at(column).getData().at(row).toString();
 }
 
-void Table::updateValue(int columnIndex, int rowIndex, int newValue){
-	//TODO
+void Table::updateValue(int columnIndex, int rowIndex, void* newValue){
+	columns[columnIndex].updateData(
+		Datum(newValue, columns[columnIndex].getType()), rowIndex);
+	//TODO make newValue void pointer
 }
 
 void Table::deleteValue(int columnIndex, int rowIndex){
-	columns[columnIndex].updateData(Datum(), 
+	columns[columnIndex].updateData(Datum(), rowIndex);
+}
+
+int Table::findColumn(string columnName){
+	int index = -21;
+	for(int i = 0; i < columns.size(); i++ ){
+		if( columns[i].getName() == columnName ){
+			index = i;
+			return index;
+		}
+	}
+	return index;
 }

@@ -5,6 +5,8 @@
 
 class Column{
 private:
+	
+	//type should be either "string" or "number"
 	string type;
 	string name;
 	vector<Datum> data;
@@ -14,6 +16,7 @@ public:
 		: name(colName), type(colType) {}
 
 	string getName() { return name; }
+	//type should be either "string" or "number"
 	string getType() { return type; }
 	vector<Datum> getData() { return data; }
 

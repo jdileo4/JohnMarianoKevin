@@ -163,6 +163,7 @@ namespace UnitTest1
 				getData().at(0).
 				toString().c_str(), 
 				"20");
+
 			Assert::AreEqual(engine.entityTables.at(0).
 				getColumns().at(1).
 				getData().at(1).
@@ -204,23 +205,43 @@ namespace UnitTest1
 			//engine.updateEntity("table1", "two", "newValue", "==", "inequivalent");
 			//Assert::Arenotequal
 
-			engine.updateEntity("table1", "threeValue", 5, "<", 21);
+			int arg1 = 5;
+			int arg2 = 21;
+			int* arg1ptr = &arg1;
+			int* arg2ptr = &arg2;
+			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, "<", (void*)arg2ptr);
 			//should make threevalue {5, 21}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 0).c_str(), "5");
-
-			engine.updateEntity("table1", "threeValue", 1, "<=", 5);
+			
+			arg1 = 1;
+			arg2 = 5;
+			arg1ptr = &arg1;
+			arg2ptr = &arg2;
+			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, "<=", (void*)arg2ptr);
 			//should make {1, 21}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 0).c_str(), "1");
-
-			engine.updateEntity("table1", "threeValue", 10, "==", 21);
+			
+			arg1 = 10;
+			arg2 = 21;
+			arg1ptr = &arg1;
+			arg2ptr = &arg2;
+			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, "==", (void*)arg2ptr);
 			//should make {1, 10}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 1).c_str(), "10");
-
-			engine.updateEntity("table1", "threeValue", 5, ">=", 10);
+			
+			arg1 = 5;
+			arg2 = 10;
+			arg1ptr = &arg1;
+			arg2ptr = &arg2;
+			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, ">=", (void*)arg2ptr);
 			//should make {1, 5}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 1).c_str(), "5");
-
-			engine.updateEntity("table1", "threeValue", 30, ">", 0);
+			
+			arg1 = 30;
+			arg2 = 0;
+			arg1ptr = &arg1;
+			arg2ptr = &arg2;
+			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, ">", (void*)arg2ptr);
 			//should make {30, 30}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 0).c_str(), "30");
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 1).c_str(), "30");
@@ -260,7 +281,7 @@ namespace UnitTest1
 				toString().c_str(), 
 				"column 1, row 1");
 			
-			engine.deleteFrom("table1", "two", "==", "column 1, row 1");
+			//engine.deleteFrom("table1", "two", "==", "column 1, row 1");
 			//assert "column 1, row 1" doesn't exist
 
 

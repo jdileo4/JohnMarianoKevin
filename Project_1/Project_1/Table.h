@@ -23,9 +23,11 @@ public:
 	vector<Column> getColumns() { return columns; }
 	vector<string> getKeys() { return keys; } 
 
+	//returns index of named column from columns
+	int findColumn(string columnName);
 	void updateColumns(vector<Column> newColumns) { columns  = newColumns; }
 	void updateKeys(vector<string> newKeys) { keys = newKeys; }
-	void updateValue(int columnIndex, int rowIndex, int newValue);
+	void updateValue(int columnIndex, int rowIndex, void* newValue);
 	void deleteValue(int columnIndex, int rowIndex);
 
 	//returns 0 if success, 1 if rowData is too big to fit in table
