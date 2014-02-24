@@ -85,13 +85,12 @@ int Engine::insertInto(string tableName, vector<Datum> rowData){
 }
 
 int Engine::updateEntity(string tableName, string att, void* newVal, string cond, void* condVal){
-	//TODO fix this, either update to void* handling or maybe should overload function
+	int errorCode = -1;
 	int i = 0, j = 0;
 	//Look for the table in the engine
 	i = FindTable(tableName);
-	if( i == -21 ){
-		return CANT_FIND_TABLE;
-	}
+	if( i == -21 ) return CANT_FIND_TABLE;
+
 	//look for the column in the table
 	j = entityTables[i].findColumn(att);
 
@@ -106,29 +105,201 @@ int Engine::updateEntity(string tableName, string att, void* newVal, string cond
 		int intCondVal = *temp;
 		if(cond == ">"){
 			for(int k = 0; k < dataSize; k++){
-				if(tempData[k].getValue() > intCondVal)
-					entityTables[i].columns[j].updateData(Datum(newVal, type), k);		
+				if(tempData[k].getValue() > intCondVal){
+					entityTables[i].columns[j].updateData(Datum(newVal, type), k);	
+					errorCode = 0;
+				}
 			}
 		} else if(cond == "<"){
 			for(int k = 0; k < dataSize; k++){
-				if(tempData[k].getValue() < intCondVal)
-					//entityTables[i].getColumns()[j].updateData(Datum(newVal), k);
-						entityTables[i].columns[j].updateData(Datum(newVal, type), k);
+				if(tempData[k].getValue() < intCondVal){
+					entityTables[i].columns[j].updateData(Datum(newVal, type), k);
+					errorCode = 0;
+				}
 			}
 		} else if(cond == "=="){
 			for(int k = 0; k < dataSize; k++){
-				if(tempData[k].getValue() == intCondVal)
-					entityTables[i].columns[j].updateData(Datum(newVal, type), k);		
+				if(tempData[k].getValue() == intCondVal){
+					entityTables[i].columns[j].updateData(Datum(newVal, type), k);
+					errorCode = 0;
+				}
 			}
 		} else if(cond == ">="){
 			for(int k = 0; k < dataSize; k++){
-				if(tempData[k].getValue() >= intCondVal)
+				if(tempData[k].getValue() >= intCondVal){
 					entityTables[i].columns[j].updateData(Datum(newVal, type), k);
+					errorCode = 0;
+				}
 			}
 		} else if(cond == "<="){
 			for(int k = 0; k < dataSize; k++){
-				if(tempData[k].getValue() <= intCondVal)
+				if(tempData[k].getValue() <= intCondVal){
 					entityTables[i].columns[j].updateData(Datum(newVal, type), k);
+					errorCode = 0;
+				}
+			}
+		}
+	} 
+	else if (type == "string"){
+		string* temp = (string*)condVal;
+		string stringCondVal = *temp;
+		if(cond == "=="){
+			for(int k = 0; k < dataSize; k++){
+				if(tempData[k].getName() == stringCondVal){
+					entityTables[i].columns[j].updateData(Datum(newVal, type), k);
+					errorCode = 0;
+				}
+			}
+		}
+	} 
+	else {
+		errorCode = TYPE_ERROR;
+	}
+
+	return errorCode;
+}
+
+int Engine::deleteFrom(string tableName, string att, string cond, void* condVal){
+	int errorCode = -1;
+	int i = 0, j = 0;
+	//Look for the table in the engine
+	i = FindTable(tableName);
+	if( i == -21 ) return CANT_FIND_TABLE;
+
+	//look for the column in the table
+	j = entityTables[i].findColumn(att);
+
+	//get type for Datum constructor
+	string type = entityTables[i].getColumns()[j].getType();
+
+	int dataSize = entityTables[i].getColumns()[j].getData().size();
+	vector<Datum> tempData = entityTables[i].getColumns()[j].getData();
+
+	if (type == "number"){
+		int* temp = (int*)condVal;
+		int intCondVal = *temp;
+		if(cond == ">"){
+			for(int k = 0; k < dataSize; k++){
+				if(tempData[k].getValue() > intCondVal){
+					entityTables[i].columns[j].updateData(Datum(NULL, type), k);	
+					errorCode = 0;
+				}
+			}
+		} else if(cond == "<"){
+			for(int k = 0; k < dataSize; k++){
+				if(tempData[k].getValue() < intCondVal){
+					entityTables[i].columns[j].updateData(Datum(NULL, type), k);
+					errorCode = 0;
+				}
+			}
+		} else if(cond == "=="){
+			for(int k = 0; k < dataSize; k++){
+				if(tempData[k].getValue() == intCondVal){
+					entityTables[i].columns[j].updateData(Datum(NULL, type), k);
+					errorCode = 0;
+				}
+			}
+		} else if(cond == ">="){
+			for(int k = 0; k < dataSize; k++){
+				if(tempData[k].getValue() >= intCondVal){
+					entityTables[i].columns[j].updateData(Datum(NULL, type), k);
+					errorCode = 0;
+				}
+			}
+		} else if(cond == "<="){
+			for(int k = 0; k < dataSize; k++){
+				if(tempData[k].getValue() <= intCondVal){
+					entityTables[i].columns[j].updateData(Datum(NULL, type), k);
+					errorCode = 0;
+				}
+			}
+		}
+	} 
+	else if (type == "string"){
+		string* temp = (string*)condVal;
+		string stringCondVal = *temp;
+		if(cond == "=="){
+			for(int k = 0; k < dataSize; k++){
+				if(tempData[k].getName() == stringCondVal){
+					entityTables[i].columns[j].updateData(Datum("", type), k);
+					errorCode = 0;
+				}
+			}
+		}
+	} 
+	else {
+		errorCode = TYPE_ERROR;
+	}
+
+	return errorCode;
+}
+
+Table Engine::selection(string initTable, string seleTable, string att, string cond, void* condVal){
+	int i = 0, tID = 0;
+	tID = FindTable(initTable);
+	i = entityTables[tID].findColumn(att);
+
+	int dataSize = entityTables[tID].getColumns()[i].getData().size();
+	int keySize = entityTables[tID].getKeys().size();
+
+	vector<Datum> tempData = entityTables[tID].getColumns()[i].getData();
+	Table* tPtr = new Table(seleTable, entityTables[tID].getKeys());
+	Table sTable = *tPtr;
+
+	string type = entityTables[tID].getColumns()[i].getType();
+
+	if (type == "number"){
+		int* temp = (int*)condVal;
+		int intCondVal = *temp;
+		if(cond == ">"){
+			for(int j = 0; j < dataSize; j++){
+				if(tempData[j].getValue() > intCondVal){
+					vector<Datum> tempRow;
+					for(int k = 0; k < keySize; k++){
+						tempRow.push_back(entityTables[tID].getColumns()[k].getData()[j]);				
+					}
+					sTable.addRow(tempRow);
+				}
+			}
+		} else if(cond == "<"){
+			for(int j = 0; j < dataSize; j++){
+				if(tempData[j].getValue() < intCondVal){
+					vector<Datum> tempRow;
+					for(int k = 0; k < keySize; k++){
+						tempRow.push_back(entityTables[tID].getColumns()[k].getData()[j]);				
+					}
+					sTable.addRow(tempRow);
+				}
+			}
+		} else if(cond == "=="){
+			for(int j = 0; j < dataSize; j++){
+				if(tempData[j].getValue() == intCondVal){
+					vector<Datum> tempRow;
+					for(int k = 0; k < keySize; k++){
+						tempRow.push_back(entityTables[tID].getColumns()[k].getData()[j]);				
+					}
+					sTable.addRow(tempRow);
+				}
+			}
+		} else if(cond == ">="){
+			for(int j = 0; j < dataSize; j++){
+				if(tempData[j].getValue() >= intCondVal){
+					vector<Datum> tempRow;
+					for(int k = 0; k < keySize; k++){
+						tempRow.push_back(entityTables[tID].getColumns()[k].getData()[j]);				
+					}
+					sTable.addRow(tempRow);
+				}
+			}
+		} else if(cond == "<="){
+			for(int j = 0; j < dataSize; j++){
+				if(tempData[j].getValue() <= intCondVal){
+					vector<Datum> tempRow;
+					for(int k = 0; k < keySize; k++){
+						tempRow.push_back(entityTables[tID].getColumns()[k].getData()[j]);					
+					}
+					sTable.addRow(tempRow);
+				}
 			}
 		}
 	}
@@ -136,148 +307,57 @@ int Engine::updateEntity(string tableName, string att, void* newVal, string cond
 		string* temp = (string*)condVal;
 		string stringCondVal = *temp;
 		if(cond == "=="){
-			for(int k = 0; k < dataSize; k++){
-				if(tempData[k].getName() == stringCondVal)
-					entityTables[i].columns[j].updateData(Datum(newVal, type), k);		
+			for(int j = 0; j < dataSize; j++){
+				if(tempData[j].getName() == stringCondVal){
+					vector<Datum> tempRow;
+					for(int k = 0; k < keySize; k++){
+						tempRow.push_back(entityTables[tID].getColumns()[k].getData()[j]);					
+					}
+					sTable.addRow(tempRow);
+				}
 			}
 		}
-	}
+	} 
+
+	return sTable;
 }
 
-void Engine::deleteFrom(string tableName, string att, string cond, int condVal){
-	int i = 0, j = 0;
-	while(entityTables[i].getName() != tableName) i++;
-	while(entityTables[i].getColumns()[j].getName() != att) j++;
+Table Engine::projection(string initTable, string projTable, vector<string> att){
+	int tID = 0;
+	tID = FindTable(initTable);
 
-	int dataSize = entityTables[i].getColumns()[j].getData().size();
-	vector<Datum> tempData = entityTables[i].getColumns()[j].getData();
+	int colSize = entityTables[tID].columns[0].getData().size();
 
-	if(cond == ">"){
-		for(int k = 0; k < dataSize; k++){
-			if(tempData[k].getValue() > condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(NULL);
-		}
-	} else if(cond == "<"){
-		for(int k = 0; k < dataSize; k++){
-			if(tempData[k].getValue() > condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(NULL);
-		}
-	} else if(cond == "=="){
-		for(int k = 0; k < dataSize; k++){
-			if(tempData[k].getValue() > condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(NULL);
-		}
-	} else if(cond == ">="){
-		for(int k = 0; k < dataSize; k++){
-			if(tempData[k].getValue() > condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(NULL);
-		}
-	} else if(cond == "<="){
-		for(int k = 0; k < dataSize; k++){
-			if(tempData[k].getValue() > condVal)
-				entityTables[i].getColumns()[j].getData()[k].setValue(NULL);
-		}
-	}
-}
-
-Table Engine::selection(Table initTable, string seleTable, string att, string cond, int condVal){
-	int i = 0;
-	while(initTable.getColumns()[i].getName() != att) i++;
-
-	int dataSize = initTable.getColumns()[i].getData().size();
-	int keySize = initTable.getKeys().size();
-
-	vector<Datum> tempData = initTable.getColumns()[i].getData();
-	Table* sTable = new Table(seleTable, initTable.getKeys());
-
-	if(cond == ">"){
-		for(int j = 0; j < dataSize; j++){
-			if(tempData[j].getValue() > condVal){
-				vector<Datum> tempRow;
-				for(int k = 0; k < keySize; k++){
-					tempRow.push_back(initTable.getColumns()[k].getData()[j]);				
-				}
-				sTable->addRow(tempRow);
-			}
-		}
-	} else if(cond == "<"){
-		for(int j = 0; j < dataSize; j++){
-			if(tempData[j].getValue() > condVal){
-				vector<Datum> tempRow;
-				for(int k = 0; k < keySize; k++){
-					tempRow.push_back(initTable.getColumns()[k].getData()[j]);				
-				}
-				sTable->addRow(tempRow);
-			}
-		}
-	} else if(cond == "=="){
-		for(int j = 0; j < dataSize; j++){
-			if(tempData[j].getValue() > condVal){
-				vector<Datum> tempRow;
-				for(int k = 0; k < keySize; k++){
-					tempRow.push_back(initTable.getColumns()[k].getData()[j]);				
-				}
-				sTable->addRow(tempRow);
-			}
-		}
-	} else if(cond == ">="){
-		for(int j = 0; j < dataSize; j++){
-			if(tempData[j].getValue() > condVal){
-				vector<Datum> tempRow;
-				for(int k = 0; k < keySize; k++){
-					tempRow.push_back(initTable.getColumns()[k].getData()[j]);				
-				}
-				sTable->addRow(tempRow);
-			}
-		}
-	} else if(cond == "<="){
-		for(int j = 0; j < dataSize; j++){
-			if(tempData[j].getValue() > condVal){
-				vector<Datum> tempRow;
-				for(int k = 0; k < keySize; k++){
-					tempRow.push_back(initTable.getColumns()[k].getData()[j]);				
-				}
-				sTable->addRow(tempRow);
-			}
-		}
-	}
-
-	return *sTable;
-}
-
-Table Engine::projection(Table initTable, string projTable, string att){
-	int i = 0;
-	while(initTable.getColumns()[i].getName() != att) i++;
-
-	int colSize = initTable.getColumns()[i].getData().size();
-
-	vector<string> projKeys;
-	projKeys.push_back(att);
-
-	Table* tPtr = new Table(projTable, projKeys);
+	Table* tPtr = new Table(projTable, att);
 	Table pTable = *tPtr;
-	vector<Datum> tempData = initTable.getColumns()[i].getData();
 
-	string colName = initTable.getColumns()[i].getName();
-	string colType = initTable.getColumns()[i].getType();
+	for(int i = 0; i < att.size(); i++){
+		vector<Datum> tempData = entityTables[tID].columns[i].getData();
 
-	pTable.addColumn(colName, colType);
-	for(int j = 0; j < colSize; j++){
-		pTable.getColumns()[0].addData(tempData[j]);
+		string colName = entityTables[tID].columns[i].getName();
+		string colType = entityTables[tID].columns[i].getType();
+
+		pTable.addColumn(colName, colType);
+		for(int j = 0; j < colSize; j++){
+			pTable.getColumns()[i].addData(tempData[j]);
+		}
 	}
 
 	return pTable;
 }
 
-Table Engine::rename(Table initTable, string reTable, vector<string> newAtt){
-	Table* tPtr = new Table(reTable, newAtt);
+Table Engine::rename(string initTable, string reTable, vector<string> att){
+	int tID = 0;
+	tID = FindTable(initTable);
+
+	Table* tPtr = new Table(reTable, att);
 	Table rTable = *tPtr;
 
-	rTable = initTable;
-	rTable.updateKeys(newAtt);
+	rTable = entityTables[tID];
+	rTable.updateKeys(att);
 
-	for(int i = 0; i < newAtt.size(); i++){
-		rTable.getColumns()[i].setName(newAtt[i]);
+	for(int i = 0; i < att.size(); i++){
+		rTable.columns[i].setName(att[i]);
 	}
 
 	return rTable;
@@ -332,27 +412,31 @@ dTable.addRow(tempRow);
 return dTable;
 }*/
 
-Table Engine::crossProduct(string crossName, Table table1, Table table2){
-	vector<string> newKeys = table1.getKeys();
-	vector<string> keys2 = table2.getKeys();
+Table Engine::crossProduct(string crossName, string table1, string table2){
+	int t1ID = 0, t2ID = 0;
+	t1ID = FindTable(table1);
+	t2ID = FindTable(table2);
+
+	vector<string> newKeys = entityTables[t1ID].getKeys();
+	vector<string> keys2 = entityTables[t2ID].getKeys();
 	newKeys.insert(newKeys.end(), keys2.begin(), keys2.end());
 
 	Table* tPtr = new Table(crossName, newKeys);
 	Table cTable = *tPtr;
 
-	int dataSize = table1.getColumns()[0].getData().size();
-	int keySize1 = table1.getKeys().size();
+	int dataSize = entityTables[t1ID].columns[0].getData().size();
+	int keySize1 = entityTables[t1ID].getKeys().size();
 	int keySize2 = keys2.size();
 
 	for(int i = 0; i < keys2.size(); i++){
 		vector<Datum> tempData;
 		for(int j = 0; j < dataSize; j++){
 			for(int k = 0; k < keySize1; k++){
-				tempData.push_back(table1.getColumns()[k].getData()[j]);
+				tempData.push_back(entityTables[t1ID].getColumns()[k].getData()[j]);
 			}
 
 			for(int k = 0; k < keySize2; k++){
-				tempData.push_back(table2.getColumns()[k].getData()[i]);
+				tempData.push_back(entityTables[t2ID].getColumns()[k].getData()[i]);
 			}
 		}
 		cTable.addRow(tempData);
@@ -361,13 +445,17 @@ Table Engine::crossProduct(string crossName, Table table1, Table table2){
 	return cTable;
 }
 
-Table Engine::naturalJoin(string joinName, Table table1, Table table2){
-	vector<string> newKeys = table1.getKeys();
-	vector<string> keys2 = table2.getKeys();
-	newKeys.insert(newKeys.end(),keys2.begin(), keys2.end());
+Table Engine::naturalJoin(string joinName, string table1, string table2){
+	int t1ID = 0, t2ID = 0;
+	t1ID = FindTable(table1);
+	t2ID = FindTable(table2);
 
-	vector<Column> newCols = table1.getColumns();
-	vector<Column> cols2 = table2.getColumns();
+	vector<string> newKeys = entityTables[t1ID].getKeys();
+	vector<string> keys2 = entityTables[t2ID].getKeys();
+	newKeys.insert(newKeys.end(), keys2.begin(), keys2.end());
+
+	vector<Column> newCols = entityTables[t1ID].getColumns();
+	vector<Column> cols2 = entityTables[t2ID].getColumns();
 	newCols.insert(newCols.end(), cols2.begin(), cols2.end());
 
 	Table* tPtr = new Table(joinName, newKeys);

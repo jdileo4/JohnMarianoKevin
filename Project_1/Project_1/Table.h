@@ -9,8 +9,8 @@ class Table{
 private:
 	int id;
 	string name;
-
 	vector<string> keys;
+
 public:
 	//TODO: make private
 	vector<Column> columns;
