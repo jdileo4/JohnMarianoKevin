@@ -1,23 +1,17 @@
-﻿Build started 2/18/2014 12:00:26 AM.
-     1>Project "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Project_1\Project_1.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2/24/2014 5:05:20 PM.
+     1>Project "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Project_1\Project_1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PROJECT_1_EXPORTS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\Project_1.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PROJECT_1_EXPORTS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Project_1.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Datum.cpp Engine.cpp Parse.cpp Project_1.cpp Table.cpp
-         Table.cpp
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\table.cpp(10): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\table.cpp(44): warning C4018: '<' : signed/unsigned mismatch
-         Project_1.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PROJECT_1_EXPORTS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Project_1.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Parse.cpp
          Parse.cpp
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(34): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(45): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(69): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(363): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(538): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(545): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(553): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(555): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(650): warning C4996: 'std::basic_string<_Elem,_Traits,_Alloc>::copy': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(34): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(45): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(69): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(368): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(543): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(550): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(558): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(560): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(655): warning C4996: 'std::basic_string<_Elem,_Traits,_Alloc>::copy': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
                  with
                  [
                      _Elem=char,
@@ -31,33 +25,21 @@
                      _Traits=std::char_traits<char>,
                      _Alloc=std::allocator<char>
                  ]
-         Engine.cpp
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(14): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(42): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(44): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(49): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(51): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(58): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(279): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(347): warning C4018: '<' : signed/unsigned mismatch
-         Datum.cpp
-         Generating Code...
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\engine.cpp(145): warning C4715: 'Engine::updateEntity' : not all control paths return a value
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(523): warning C4715: 'getString' : not all control paths return a value
-     1>c:\users\some random-azz dude\documents\github\temp\project_1\project_1\parse.cpp(467): warning C4715: 'queryType' : not all control paths return a value
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(528): warning C4715: 'getString' : not all control paths return a value
+     1>c:\users\some random-azz dude\documents\github\temp2\project_1\project_1\parse.cpp(472): warning C4715: 'queryType' : not all control paths return a value
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PROJECT_1_EXPORTS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt dllmain.cpp
          dllmain.cpp
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\Project_1.lib" /NOLOGO Debug\Datum.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Debug\Project_1.lib" /NOLOGO Debug\Datum.obj
          Debug\dllmain.obj
          Debug\Engine.obj
          Debug\Parse.obj
          Debug\Project_1.obj
          Debug\stdafx.obj
          Debug\Table.obj
-         Project_1.vcxproj -> C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Debug\Project_1.lib
-     1>Done Building Project "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp\Project_1\Project_1\Project_1.vcxproj" (Build target(s)).
+         Project_1.vcxproj -> C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Debug\Project_1.lib
+     1>Done Building Project "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Project_1\Project_1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:15.78
+Time Elapsed 00:00:01.99

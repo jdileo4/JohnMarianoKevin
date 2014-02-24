@@ -321,7 +321,7 @@ string queryType(int index,vector<string> operations){
 		
 		int tIndex = engine.FindTable(othertablename);
 
-		engine.entityTables.push_back(engine.selection(engine.entityTables[tIndex],tableName,attribute,operation,0));
+		engine.entityTables.push_back(engine.selection(engine.entityTables[tIndex].getName(),tableName,attribute,operation,0));
 		
 		return tableName;
 		
@@ -336,7 +336,12 @@ string queryType(int index,vector<string> operations){
 
 		int tIndex = engine.FindTable(othertablename);
 
-		engine.entityTables.push_back(engine.projection(engine.entityTables[tIndex],tableName,attributeName));
+		//TODO: HACK...add attribute name to a vector for projection...should be able to handle
+		//more than one attributeName
+		vector<string> attributeList;
+		attributeList.push_back(attributeName);
+
+		engine.entityTables.push_back(engine.projection(engine.entityTables[tIndex].getName(),tableName,attributeList));
 
 		return tableName;
 
@@ -352,7 +357,7 @@ string queryType(int index,vector<string> operations){
 
 		int tIndex = engine.FindTable(othertablename);
 
-		engine.entityTables.push_back(engine.rename(engine.entityTables[tIndex],tableName,data));
+		engine.entityTables.push_back(engine.rename(engine.entityTables[tIndex].getName(),tableName,data));
 
 		return tableName;
 
