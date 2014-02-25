@@ -450,6 +450,27 @@ namespace UnitTest1
 			Assert::AreEqual(0,Operations(data));
 		
 		}
+		
+		TEST_METHOD(QUERY_TYPE){
+
+			//We first open a File containing a Table
+			vector<string> data;
+			string message = "OPEN Random;";
+
+			Parse(message,data);
+			Assert::AreEqual(0,Operations(data));
+
+			data.clear();
+			message = "Favorite <- select ( Food == SPAGUETTI);";
+			Parse(message,data);
+			Assert::AreEqual(0,Operations(data));
+
+			data.clear();
+			message = "Favorite <- rename Food, FOOD;";
+			Parse(message,data);
+			Assert::AreEqual(0,Operations(data));
+
+		}
 
 		
 	};
