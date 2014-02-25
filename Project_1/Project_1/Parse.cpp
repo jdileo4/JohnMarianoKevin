@@ -76,6 +76,7 @@ int Parser::insertInto(vector<string> operations){
 
 	for(int i = 5; i < operations.size(); i++){
 
+		//Chect if its a number, and if it is, cast it to an int
 		if( isInteger(operations[i]) == true ){
 
 			int number = atoi(operations[i].c_str());
@@ -88,6 +89,7 @@ int Parser::insertInto(vector<string> operations){
 		}
 	}
 
+	//Then insert into table
 	engine.insertInto(tableName,data);
 
 	return 0;
@@ -176,6 +178,8 @@ int Parser::openTable(vector<string> operations){
 int Parser::createFile(vector<string> operations){
 
 	ofstream dbFile;
+	
+	//Make a filename using the tablename + the extension db
 	string filename = operations[1]+ ".db";
 
 	cout << filename << endl;
@@ -261,6 +265,8 @@ int Parser::updateTable(vector<string> operations){
 	void* newValuePtr;
 	void* condValuePtr;
 
+
+	//Check again if we are dealing with intergers or chars
 	if( isInteger(operations[4]) ){
 
 		int newValue = atoi(operations[5].c_str());
@@ -515,6 +521,7 @@ int Parser::showTable(vector<string> operations){
 		return CANT_FIND_TABLE;
 	}
 
+	//Then just output table elements
 	cout << engine.entityTables[tIndex].getName() << " ";
 
 	for( int i = 0; i < engine.entityTables[tIndex].getKeys().size(); i++){
@@ -546,7 +553,8 @@ int Parser::showTable(vector<string> operations){
 }
 
 int Parser::Operations(vector<string> operations){
-
+	
+	//Check the parsed string for the next instruction
 	if( operations[0] == "CREATE" ) {
 
 		if( createTable(operations) == TYPE_ERROR ){
