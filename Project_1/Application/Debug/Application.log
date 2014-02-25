@@ -1,12 +1,15 @@
-﻿Build started 2/24/2014 7:38:40 PM.
-     1>Project "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Application\Application.vcxproj" on node 3 (Build target(s)).
+﻿Build started 2/25/2014 6:54:01 AM.
+     1>Project "C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Application\Application.vcxproj" on node 3 (Build target(s)).
      1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Debug\Application.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Debug\Application.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Debug\Application.lib" /MACHINE:X86 Debug\Application.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Debug\Application.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Debug\Application.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Debug\Application.lib" /MACHINE:X86 Debug\Application.obj
          Debug\stdafx.obj
-         "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Debug\Project_1.lib"
-         Application.vcxproj -> C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Debug\Application.exe
-     1>Done Building Project "C:\Users\SOME RANDOM-AZZ DUDE\Documents\GitHub\temp2\Project_1\Application\Application.vcxproj" (Build target(s)).
+         C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Debug\Project_1.lib
+         Application.vcxproj -> C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Debug\Application.exe
+     1>Project "C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Application\Application.vcxproj" (1) is building "C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Project_1\Project_1.vcxproj" (2:4) on node 2 (GetCopyToOutputDirectoryItems target(s)).
+       Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
+     2>Done Building Project "C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Project_1\Project_1.vcxproj" (GetCopyToOutputDirectoryItems target(s)).
+     1>Done Building Project "C:\Users\KEVIN\Desktop\SPRING2014\CSCE315\Project_1\Application\Application.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.40
+Time Elapsed 00:00:00.88

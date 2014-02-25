@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "Engine.h"
+#include "Parser.h"
 #include <vector>
 #include "CppUnitTestAssert.h"
 
@@ -35,7 +35,7 @@ namespace UnitTest1
 			twoKeyColumns.push_back("two");
 
 			engine.createEntityTable("table1", twoKeyColumns);
-
+			
 			engine.addAttribute("table1", "one", "string");
 			engine.addAttribute("table1", "two", "string");
 			engine.addAttribute("table1", "threeValue", "number");
@@ -59,7 +59,7 @@ namespace UnitTest1
 			twoKeyColumns.push_back("two");
 
 			engine.createEntityTable("table1", twoKeyColumns);
-
+			
 			engine.addAttribute("table1", "one", "string");
 			engine.addAttribute("table1", "two", "string");
 			engine.addAttribute("table1", "threeValue", "number");
@@ -71,14 +71,14 @@ namespace UnitTest1
 			twoKeyColumns2.push_back("thirty");
 
 			engine.createEntityTable("table2", twoKeyColumns2);
-
+			
 			engine.addAttribute("table2", "ten", "string");
 			engine.addAttribute("table2", "twenty", "string");
 			engine.addAttribute("table2", "thirtyValue", "number");
 
 			//create relation table
 			engine.createRelationTable("Relation Table 1", "table1", "table2");
-
+			
 			//test table keys (should be same as table attributes)
 			vector<string> keyColumnsConcatenated(twoKeyColumns);
 			keyColumnsConcatenated.push_back(twoKeyColumns2.at(0));
@@ -112,7 +112,7 @@ namespace UnitTest1
 		TEST_METHOD(removeTable){
 			//
 			Engine engine = Engine();
-
+			
 			vector<string> twoKeyColumns;
 			twoKeyColumns.push_back("one");
 			twoKeyColumns.push_back("two");
@@ -132,11 +132,10 @@ namespace UnitTest1
 			twoKeyColumns.push_back("two");
 
 			engine.createEntityTable("table1", twoKeyColumns);
-
+			
 			engine.addAttribute("table1", "one", "string");
 			engine.addAttribute("table1", "two", "string");
 			engine.addAttribute("table1", "threeValue", "number");
-
 
 			//make rows to insert into table (string, string, number)
 			vector<Datum> rowData1;
@@ -151,7 +150,7 @@ namespace UnitTest1
 
 			engine.insertInto("table1", rowData1);
 			engine.insertInto("table1", rowData2);
-
+			
 			Assert::AreEqual(engine.entityTables.at(0).
 				getColumns().at(0).
 				getData().at(0).
@@ -179,7 +178,7 @@ namespace UnitTest1
 			twoKeyColumns.push_back("two");
 
 			engine.createEntityTable("table1", twoKeyColumns);
-
+			
 			engine.addAttribute("table1", "one", "string");
 			engine.addAttribute("table1", "two", "string");
 			engine.addAttribute("table1", "threeValue", "number");
@@ -212,7 +211,7 @@ namespace UnitTest1
 			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, "<", (void*)arg2ptr);
 			//should make threevalue {5, 21}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 0).c_str(), "5");
-
+			
 			arg1 = 1;
 			arg2 = 5;
 			arg1ptr = &arg1;
@@ -220,7 +219,7 @@ namespace UnitTest1
 			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, "<=", (void*)arg2ptr);
 			//should make {1, 21}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 0).c_str(), "1");
-
+			
 			arg1 = 10;
 			arg2 = 21;
 			arg1ptr = &arg1;
@@ -228,7 +227,7 @@ namespace UnitTest1
 			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, "==", (void*)arg2ptr);
 			//should make {1, 10}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 1).c_str(), "10");
-
+			
 			arg1 = 5;
 			arg2 = 10;
 			arg1ptr = &arg1;
@@ -236,7 +235,7 @@ namespace UnitTest1
 			engine.updateEntity("table1", "threeValue", (void*)arg1ptr, ">=", (void*)arg2ptr);
 			//should make {1, 5}
 			Assert::AreEqual(engine.entityTables.at(0).getDatum(2, 1).c_str(), "5");
-
+			
 			arg1 = 30;
 			arg2 = 0;
 			arg1ptr = &arg1;
@@ -255,7 +254,7 @@ namespace UnitTest1
 			twoKeyColumns.push_back("two");
 
 			engine.createEntityTable("table1", twoKeyColumns);
-
+			
 			engine.addAttribute("table1", "one", "string");
 			engine.addAttribute("table1", "two", "string");
 			engine.addAttribute("table1", "threeValue", "number");
@@ -274,13 +273,12 @@ namespace UnitTest1
 
 			engine.insertInto("table1", rowData1);
 			engine.insertInto("table1", rowData2);
-
+			
 			Assert::AreEqual(engine.entityTables.at(0).
 				getColumns().at(1).
 				getData().at(1).
 				toString().c_str(), 
 				"column 1, row 1");
-
 
 			string arg1 = "column 1, row 1";
 			string* arg1ptr = &arg1;
@@ -295,88 +293,438 @@ namespace UnitTest1
 		}
 
 		TEST_METHOD(selection){
-			Engine engine = Engine();
-			//make table to test
-			vector<string> twoKeyColumns;
-			twoKeyColumns.push_back("one");
-			twoKeyColumns.push_back("two");
+			  Engine engine = Engine();
+			  //make table to test
+			  vector<string> twoKeyColumns;
+			  twoKeyColumns.push_back("one");
+			  twoKeyColumns.push_back("two");
 
-			engine.createEntityTable("table1", twoKeyColumns);
+			  engine.createEntityTable("table1", twoKeyColumns);
+      
+			  engine.addAttribute("table1", "one", "string");
+			  engine.addAttribute("table1", "two", "string");
+			  engine.addAttribute("table1", "threeValue", "number");
+    
+			  //make rows to insert into table (string, string, number)
+			  vector<Datum> rowData1;
+			  rowData1.push_back(Datum("column 0, row 0"));
+			  rowData1.push_back(Datum("column 1, row 0"));
+			  rowData1.push_back(Datum(20));
 
-			engine.addAttribute("table1", "one", "string");
-			engine.addAttribute("table1", "two", "string");
-			engine.addAttribute("table1", "threeValue", "number");
+			  vector<Datum> rowData2;
+			  rowData2.push_back(Datum("column 0, row 1"));
+			  rowData2.push_back(Datum("column 1, row 1"));
+			  rowData2.push_back(Datum(21));
 
-			//make rows to insert into table (string, string, number)
-			vector<Datum> rowData1;
-			rowData1.push_back(Datum("column 0, row 0"));
-			rowData1.push_back(Datum("column 1, row 0"));
-			rowData1.push_back(Datum(20));
+			  vector<Datum> rowData3;
+			  rowData3.push_back(Datum("column 0, row 2"));
+			  rowData3.push_back(Datum("column 1, row 2"));
+			  rowData3.push_back(Datum(22));
 
-			vector<Datum> rowData2;
-			rowData2.push_back(Datum("column 0, row 1"));
-			rowData2.push_back(Datum("column 1, row 1"));
-			rowData2.push_back(Datum(21));
+			  vector<Datum> rowData4;
+			  rowData4.push_back(Datum("column 0, row 3"));
+			  rowData4.push_back(Datum("column 1, row 3"));
+			  rowData4.push_back(Datum(23));
 
-			vector<Datum> rowData3;
-			rowData2.push_back(Datum("column 0, row 2"));
-			rowData2.push_back(Datum("column 1, row 2"));
-			rowData2.push_back(Datum(22));
+			  engine.insertInto("table1", rowData1);
+			  engine.insertInto("table1", rowData2);
+			  engine.insertInto("table1", rowData3);
+			  engine.insertInto("table1", rowData4);
+      
+			  int arg1 = 22;
+			  int* arg1Ptr = &arg1;
 
-			vector<Datum> rowData4;
-			rowData2.push_back(Datum("column 0, row 3"));
-			rowData2.push_back(Datum("column 1, row 3"));
-			rowData2.push_back(Datum(23));
+			  engine.entityTables.push_back(engine.selection("table1", "table2", "threeValue", "<=", (void*)arg1Ptr));
 
-			engine.insertInto("table1", rowData1);
-			engine.insertInto("table1", rowData2);
-			engine.insertInto("table1", rowData3);
-			engine.insertInto("table1", rowData4);
-
-
-			int arg1 = 22;
-			int* arg1Ptr = &arg1;
-
-			Table table2 = engine.selection("table1", "table2", "threeValue", "<=", (void*)arg1Ptr);
-
-			Assert::AreEqual(table2.
+			  Assert::AreEqual(engine.entityTables.at(1).
 				getColumns().at(0).
 				getData().at(0).
 				toString().c_str(), 
-				"column 0, row 2");
+				"column 0, row 0");
 
-			/*Assert::AreEqual(table2.
-			getColumns().at(1).
-			getData().at(0).
-			toString().c_str(), 
-			"column 1, row 2");
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(1).
+				getData().at(0).
+				toString().c_str(), 
+				"column 1, row 0");
 
-			Assert::AreEqual(table2.
-			getColumns().at(2).
-			getData().at(0).
-			toString().c_str(), 
-			"22");
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(2).
+				getData().at(0).
+				toString().c_str(), 
+				"20");
 
-			Assert::AreEqual(table2.
-			getColumns().at(0).
-			getData().at(1).
-			toString().c_str(), 
-			"column 0, row 3");
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(0).
+				getData().at(1).
+				toString().c_str(), 
+				"column 0, row 1");
 
-			Assert::AreEqual(table2.
-			getColumns().at(1).
-			getData().at(1).
-			toString().c_str(), 
-			"column 1, row 3");
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(1).
+				getData().at(1).
+				toString().c_str(), 
+				"column 1, row 1");
 
-			Assert::AreEqual(table2.
-			getColumns().at(2).
-			getData().at(1).
-			toString().c_str(), 
-			"23");*/
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(2).
+				getData().at(1).
+				toString().c_str(), 
+				"21");
+      	}
+
+		TEST_METHOD(projection){
+			  Engine engine = Engine();
+			  //make table to test
+			  vector<string> twoKeyColumns;
+			  twoKeyColumns.push_back("one");
+			  twoKeyColumns.push_back("two");
+
+			  engine.createEntityTable("table1", twoKeyColumns);
+      
+			  engine.addAttribute("table1", "one", "string");
+			  engine.addAttribute("table1", "two", "string");
+			  engine.addAttribute("table1", "threeValue", "number");
+    
+			  //make rows to insert into table (string, string, number)
+			  vector<Datum> rowData1;
+			  rowData1.push_back(Datum("column 0, row 0"));
+			  rowData1.push_back(Datum("column 1, row 0"));
+			  rowData1.push_back(Datum(20));
+
+			  vector<Datum> rowData2;
+			  rowData2.push_back(Datum("column 0, row 1"));
+			  rowData2.push_back(Datum("column 1, row 1"));
+			  rowData2.push_back(Datum(21));
+
+			  vector<Datum> rowData3;
+			  rowData3.push_back(Datum("column 0, row 2"));
+			  rowData3.push_back(Datum("column 1, row 2"));
+			  rowData3.push_back(Datum(22));
+
+			  vector<Datum> rowData4;
+			  rowData4.push_back(Datum("column 0, row 3"));
+			  rowData4.push_back(Datum("column 1, row 3"));
+			  rowData4.push_back(Datum(23));
+
+			  engine.insertInto("table1", rowData1);
+			  engine.insertInto("table1", rowData2);
+			  engine.insertInto("table1", rowData3);
+			  engine.insertInto("table1", rowData4);
+
+			  vector<string> attributes;
+			  attributes.push_back("one");
+			  attributes.push_back("threeValue");
+
+			  engine.entityTables.push_back(engine.projection("table1", "table2", attributes));
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(0).
+				getData().at(0).
+				toString().c_str(), 
+				"column 0, row 0");		
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(0).
+				getData().at(1).
+				toString().c_str(), 
+				"column 0, row 1");				 
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(0).
+				getData().at(2).
+				toString().c_str(), 
+				"column 0, row 2");	
+			  			  
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(0).
+				getData().at(3).
+				toString().c_str(), 
+				"column 0, row 3");	
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(1).
+				getData().at(0).
+				toString().c_str(), 
+				"20");		
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(1).
+				getData().at(1).
+				toString().c_str(), 
+				"21");				 
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(1).
+				getData().at(2).
+				toString().c_str(), 
+				"22");	
+			  			  
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(1).
+				getData().at(3).
+				toString().c_str(), 
+				"23");	
 		}
-		
-		TEST_METHOD(OPEN_AND_WRITE)
+
+		TEST_METHOD(rename){
+			  Engine engine = Engine();
+			  //make table to test
+			  vector<string> twoKeyColumns;
+			  twoKeyColumns.push_back("one");
+			  twoKeyColumns.push_back("two");
+
+			  engine.createEntityTable("table1", twoKeyColumns);
+      
+			  engine.addAttribute("table1", "one", "string");
+			  engine.addAttribute("table1", "two", "string");
+			  engine.addAttribute("table1", "threeValue", "number");
+    
+			  //make rows to insert into table (string, string, number)
+			  vector<Datum> rowData1;
+			  rowData1.push_back(Datum("column 0, row 0"));
+			  rowData1.push_back(Datum("column 1, row 0"));
+			  rowData1.push_back(Datum(20));
+
+			  vector<Datum> rowData2;
+			  rowData2.push_back(Datum("column 0, row 1"));
+			  rowData2.push_back(Datum("column 1, row 1"));
+			  rowData2.push_back(Datum(21));
+
+			  engine.insertInto("table1", rowData1);
+			  engine.insertInto("table1", rowData2);
+
+			  vector<string> attributes;
+			  attributes.push_back("one2");
+			  attributes.push_back("two2");
+			  attributes.push_back("threeValue2");
+
+			  engine.entityTables.push_back(engine.rename("table1", "table2", attributes));
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(0).
+				getName().c_str(), 
+				"one2");	
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(1).
+				getName().c_str(), 
+				"two2");
+
+			  Assert::AreEqual(engine.entityTables.at(1).
+				getColumns().at(2).
+				getName().c_str(), 
+				"threeValue2");
+		}
+
+		TEST_METHOD(setUnion){
+			  Engine engine = Engine();
+			  //make table to test
+			  vector<string> twoKeyColumns;
+			  twoKeyColumns.push_back("one");
+			  twoKeyColumns.push_back("two");
+
+			  engine.createEntityTable("table1", twoKeyColumns);
+			  engine.createEntityTable("table2", twoKeyColumns);
+      
+			  engine.addAttribute("table1", "one", "string");
+			  engine.addAttribute("table1", "twoValue", "number");
+
+			  engine.addAttribute("table2", "one", "string");
+			  engine.addAttribute("table2", "twoValue", "number");
+    
+			  //make rows to insert into table (string, string, number)
+			  vector<Datum> rowData1;
+			  rowData1.push_back(Datum("A"));
+			  rowData1.push_back(Datum(0));
+
+			  vector<Datum> rowData2;
+			  rowData2.push_back(Datum("B"));
+			  rowData2.push_back(Datum(1));
+
+			  vector<Datum> tempRowData;
+			  tempRowData.push_back(Datum("B"));
+			  tempRowData.push_back(Datum(0));
+
+			  vector<Datum> rowData3;
+			  rowData3.push_back(Datum("C"));
+			  rowData3.push_back(Datum(2));
+
+			  vector<Datum> rowData4;
+			  rowData4.push_back(Datum("D"));
+			  rowData4.push_back(Datum(3));
+
+			  engine.insertInto("table1", rowData1);
+			  engine.insertInto("table1", rowData2);
+			  engine.insertInto("table1", rowData3);
+
+			  engine.insertInto("table2", tempRowData);
+			  engine.insertInto("table2", rowData3);
+			  engine.insertInto("table2", rowData4);
+
+			  engine.entityTables.push_back(engine.setUnion("table3", "table1", "table2"));
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(0).getData().at(0).toString().c_str(),"A");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(1).getData().at(0).toString().c_str(),"0");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(0).getData().at(1).toString().c_str(),"B");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(1).getData().at(1).toString().c_str(),"1");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(0).getData().at(2).toString().c_str(),"C");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(1).getData().at(2).toString().c_str(),"2");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(0).getData().at(3).toString().c_str(),"B");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(1).getData().at(3).toString().c_str(),"0");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(0).getData().at(4).toString().c_str(),"D");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(1).getData().at(4).toString().c_str(),"3");
+
+		}
+
+		TEST_METHOD(setDifference){
+			  Engine engine = Engine();
+			  //make table to test
+			  vector<string> twoKeyColumns;
+			  twoKeyColumns.push_back("one");
+			  twoKeyColumns.push_back("two");
+
+			  engine.createEntityTable("table1", twoKeyColumns);
+			  engine.createEntityTable("table2", twoKeyColumns);
+      
+			  engine.addAttribute("table1", "one", "string");
+			  engine.addAttribute("table1", "twoValue", "number");
+
+			  engine.addAttribute("table2", "one", "string");
+			  engine.addAttribute("table2", "twoValue", "number");
+    
+			  //make rows to insert into table (string, string, number)
+			  vector<Datum> rowData1;
+			  rowData1.push_back(Datum("A"));
+			  rowData1.push_back(Datum(0));
+
+			  vector<Datum> rowData2;
+			  rowData2.push_back(Datum("B"));
+			  rowData2.push_back(Datum(1));
+
+			  vector<Datum> tempRowData;
+			  tempRowData.push_back(Datum("B"));
+			  tempRowData.push_back(Datum(0));
+
+			  vector<Datum> rowData3;
+			  rowData3.push_back(Datum("C"));
+			  rowData3.push_back(Datum(2));
+
+			  vector<Datum> rowData4;
+			  rowData4.push_back(Datum("D"));
+			  rowData4.push_back(Datum(3));
+
+			  engine.insertInto("table1", rowData1);
+			  engine.insertInto("table1", rowData2);
+			  engine.insertInto("table1", rowData3);
+
+			  engine.insertInto("table2", tempRowData);
+			  engine.insertInto("table2", rowData3);
+			  engine.insertInto("table2", rowData4);
+
+			  engine.entityTables.push_back(engine.setDifference("table3", "table1", "table2"));
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(0).getData().at(0).toString().c_str(),"A");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(1).getData().at(0).toString().c_str(),"0");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(0).getData().at(1).toString().c_str(),"B");
+
+			  Assert::AreEqual(engine.entityTables.at(2).
+								getColumns().at(1).getData().at(1).toString().c_str(),"1");
+
+		}
+
+		TEST_METHOD(crossProduct){
+			  Engine engine = Engine();
+			  //make table to test
+			  vector<string> twoKeyColumns;
+			  twoKeyColumns.push_back("one");
+			  twoKeyColumns.push_back("two");
+
+			  engine.createEntityTable("table1", twoKeyColumns);
+			  engine.createEntityTable("table2", twoKeyColumns);
+      
+			  engine.addAttribute("table1", "one", "string");
+			  engine.addAttribute("table1", "two", "string");
+			  engine.addAttribute("table1", "threeValue", "number");
+
+			  engine.addAttribute("table2", "one", "string");
+			  engine.addAttribute("table2", "two", "string");
+			  engine.addAttribute("table2", "threeValue", "number");
+    
+			  //make rows to insert into table (string, string, number)
+			  vector<Datum> rowData1;
+			  rowData1.push_back(Datum("column 0, row 0"));
+			  rowData1.push_back(Datum("column 1, row 0"));
+			  rowData1.push_back(Datum(20));
+
+			  vector<Datum> rowData2;
+			  rowData2.push_back(Datum("column 0, row 1"));
+			  rowData2.push_back(Datum("column 1, row 1"));
+			  rowData2.push_back(Datum(21));
+
+			  engine.insertInto("table1", rowData1);
+			  engine.insertInto("table1", rowData2);
+
+			  engine.insertInto("table2", rowData1);
+			  engine.insertInto("table2", rowData2);
+
+			  engine.entityTables.push_back(engine.crossProduct("table3", "table1", "table2"));
+
+			  Assert::AreEqual(engine.entityTables.at(2). getColumns().at(0).getData().at(0).
+								toString().c_str(), "column 0, row 0");
+
+			  Assert::AreEqual(engine.entityTables.at(2). getColumns().at(3).getData().at(0).
+								toString().c_str(), "column 0, row 0");
+
+			  Assert::AreEqual(engine.entityTables.at(2). getColumns().at(2).getData().at(1).
+								toString().c_str(), "20");
+
+			  Assert::AreEqual(engine.entityTables.at(2). getColumns().at(5).getData().at(1).
+								toString().c_str(), "21");
+
+			  Assert::AreEqual(engine.entityTables.at(2). getColumns().at(0).getData().at(2).
+								toString().c_str(), "column 0, row 1");
+
+			  Assert::AreEqual(engine.entityTables.at(2). getColumns().at(3).getData().at(2).
+								toString().c_str(), "column 0, row 0");
+
+			  Assert::AreEqual(engine.entityTables.at(2). getColumns().at(2).getData().at(3).
+								toString().c_str(), "21");
+
+			  Assert::AreEqual(engine.entityTables.at(2). getColumns().at(5).getData().at(3).
+								toString().c_str(), "21");
+
+		}
+
+		TEST_METHOD(naturalJoin){
+
+		}
+
+/*		TEST_METHOD(OPEN_AND_WRITE)
 		{
 			Parser parser;
 
@@ -406,27 +754,28 @@ namespace UnitTest1
 			parser.Parse(message,data);
 			Assert::AreEqual(0,parser.Operations(data));
 		}
+*/
 
-		TEST_METHOD(CREATING_INSERTING_CLOSING){
-
+		TEST_METHOD(CREATING_INSERTING_CLOSING)
+		{
 			Parser parser;
 
 			//Create the table First, check if returning correctly
 			vector<string> data;
 			string message = "CREATE TABLE Food (FOOD STRING, PRICE INTERGER, TYPE STRING) PRIMARY KEY (FOOD,PRICE);";
 			parser.Parse(message,data);
-			Assert::AreEqual(0,parser.Operations(data));
+			Assert::AreEqual(0, parser.Operations(data));
 
 			//Insert rows to the newly created table Food
 			data.clear();
-			message = "INSERT INTO Food VALUES FROM (SPAGUETTI, 20.00, Italian);";
+			message = "INSERT INTO Food VALUES FROM (SPAGUETTI, 20, Italian);";
 			parser.Parse(message,data);
-			Assert::AreEqual(0,parser.Operations(data));
+			Assert::AreEqual(0, parser.Operations(data));
 
 			data.clear();
-			message = "INSERT INTO Food VALUES FROM (Fish, 15.00, SeaFood);";
+			message = "INSERT INTO Food VALUES FROM (Fish, 15, SeaFood);";
 			parser.Parse(message,data);
-			Assert::AreEqual(0,parser.Operations(data));
+			Assert::AreEqual(0, parser.Operations(data));
 		
 			//Assert::AreEqual(1,parser.engine.getEntitySize());
 			data.clear();
@@ -442,7 +791,7 @@ namespace UnitTest1
 
 		}
 
-		TEST_METHOD(QUERY_TYPE){
+/*		TEST_METHOD(QUERY_TYPE){
 
 			Parser parser;
 
@@ -536,8 +885,7 @@ namespace UnitTest1
 			Assert::AreEqual(0,parser.Operations(data));
 
 		}
-
-		
+*/		
 	};
 }
 

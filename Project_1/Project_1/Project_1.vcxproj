@@ -81,6 +81,7 @@
     <ClInclude Include="Datum.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Files\PrimaryKey.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="targetver.h" />

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Engine.h"
+#include "Parser.h"
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -661,38 +661,4 @@ int Parser::Parse(string message, vector<string>& command){
 	}
 
 	return 0;
-}
-
-int main(){
-
-	int b;
-	string message = "OPEN Random2;";
-	vector<string> data;
-
-	//Parse takes the message, parses it and stores the
-	//individual strings in a vector passed as reference
-	Parse(message,data);
-
-	//This function processes the data in vector and does an 
-	//action based on the operation, i.e. OPEN, SHOW
-	Operations(data);
-
-	message = "OPEN Random;";
-	//Parse takes the message, parses it and stores the
-	//individual strings in a vector passed as reference
-	data.clear();
-	Parse(message,data);
-
-	//This function processes the data in vector and does an 
-	//action based on the operation, i.e. OPEN, SHOW
-	Operations(data);
-
-	message = "dogs <- Random + Random2;";
-	data.clear();
-
-	Parse(message,data);
-	Operations(data);
-
-	cin >> b;
-
 }

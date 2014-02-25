@@ -47,6 +47,7 @@ public:
 
 	string getName() { return name; }
 	int getValue() { return value; }
+	string getType() { return type; }
 
 	void setName(string s) { name = s; }
 	void setValue(int v) { value = v; }
