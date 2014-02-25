@@ -416,7 +416,7 @@ string Parser::queryType(int index,vector<string> operations){
 			return tableName;
 		}
 
-		else if( instruction == "-"){
+		else if( operations[index+1] == "-"){
 
 			int t1Index = engine.FindTable(instruction);
 
@@ -440,7 +440,7 @@ string Parser::queryType(int index,vector<string> operations){
 
 		}
 
-		else if( instruction == "*"){
+		else if( operations[index+1] == "*"){
 
 			int t1Index = engine.FindTable(instruction);
 
@@ -463,7 +463,7 @@ string Parser::queryType(int index,vector<string> operations){
 			return tableName;
 		}
 
-		else if( instruction == "JOIN"){
+		else if( operations[index+1] == "JOIN"){
 
 			int t1Index = engine.FindTable(instruction);
 
