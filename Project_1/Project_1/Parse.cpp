@@ -57,7 +57,15 @@ int Parser::createTable(vector<string> operations){
 		}
 	}
 
-	//Engine.
+	//Create the table
+	engine.createEntityTable(tableName,keys);
+
+	//Add its corresponding columns
+	for( int i = 0; i < data.size()/2; i++ ){
+
+		engine.addAttribute(tableName,data[0],data[i+1]);
+	}
+
 	return 0;
 }
 
