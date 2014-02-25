@@ -13,12 +13,12 @@ Engine engine;
 
 bool isInteger(const string & s)
 {
-   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
+	if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
 
-   char * p ;
-   strtol(s.c_str(), &p, 10) ;
+	char * p ;
+	strtol(s.c_str(), &p, 10) ;
 
-   return (*p == 0) ;
+	return (*p == 0) ;
 }
 
 int createTable(vector<string> operations){
@@ -50,7 +50,7 @@ int createTable(vector<string> operations){
 			//No more things, break;
 			break;
 		}
-		
+
 		else{
 
 			data.push_back(operations[i]);
@@ -60,7 +60,7 @@ int createTable(vector<string> operations){
 	//Engine.
 	return 0;
 }
- 
+
 int insertInto(vector<string> operations){
 
 	string tableName = operations[2];
@@ -131,11 +131,11 @@ int openTable(vector<string> operations){
 			}
 
 			if( symbolcount > 1 ){
-				
+
 				engine.insertInto(tableName,data);
 				data.clear();
 			}
-			
+
 			symbolcount = symbolcount + 1;
 		}
 
@@ -147,14 +147,14 @@ int openTable(vector<string> operations){
 
 				keys.push_back(input);
 			}
-			
+
 			else if( symbolcount == 1){
-			
+
 				dbFile >> type;
 
 				engine.addAttribute(tableName,input,type);
 			}
-			
+
 			else{
 				data.push_back(Datum(input));
 			}
@@ -169,7 +169,7 @@ int createFile(vector<string> operations){
 
 	ofstream dbFile;
 	string filename = operations[1]+ ".db";
-	
+
 	cout << filename << endl;
 
 	dbFile.open(filename);
@@ -186,7 +186,7 @@ int saveToTable(vector<string> operations){
 
 	ofstream dbFile;
 	string filename = tableName + ".db";
-	
+
 	dbFile.open(filename);
 
 	//Look for the table in the engine
@@ -205,7 +205,7 @@ int saveToTable(vector<string> operations){
 
 	dbFile << tableName;
 	dbFile << " ";
-	
+
 	//Get the primary keys of the table
 	for( int i = 0; i < nOfPrimaryKeys; i++ ){
 
@@ -216,7 +216,7 @@ int saveToTable(vector<string> operations){
 
 	//Now the Column Names;
 	for( int i = 0; i < nOfColumns; i++ ){
-		
+
 		dbFile << engine.entityTables[tIndex].getColumns()[i].getName() << " ";
 		dbFile << engine.entityTables[tIndex].getColumns()[i].getType() << " ";
 	}
@@ -232,7 +232,7 @@ int saveToTable(vector<string> operations){
 		}		
 		dbFile << ";\n";
 	}
-	 
+
 	dbFile << ";\n";
 	dbFile << ";";
 
@@ -250,24 +250,31 @@ int updateTable(vector<string> operations){
 	string attributeName = operations[3];
 
 	string condition = operations[8];
+	void* newValuePtr;
+	void* condValuePtr;
 
 	if( isInteger(operations[4]) ){
 
 		int newValue = atoi(operations[5].c_str());
+		newValuePtr = &newValue;
+
 
 		if( isInteger(operations[9]) ){
-		
+
 			int condValue = atoi(operations[9].c_str());
+			condValuePtr = &condValue;
 		}
 	}
 
 	else{
 
 		string newValue = operations[5];
+		newValuePtr = &newValue;
 		string condValue = operations[9];
+		condValuePtr = &condValue;
 	}
 
-	//engine.updateEntity(tableName,attributeName,newValue,condition,condValue);
+	engine.updateEntity(tableName,attributeName,newValuePtr,condition,condValuePtr);
 
 	return 0;
 
@@ -282,17 +289,21 @@ int deleteFrom(vector<string> operations){
 
 	string condition = operations[5];
 
+	void* condValuePtr;
+
 	if( isInteger(operations[6]) ){
-		
+
 		int condValue = atoi(operations[6].c_str());
+		condValuePtr = &condValue;
 	}
-	
+
 	else{
 
 		string condValue = operations[6];
-	}
+		condValuePtr = &condValue;
 
-	//engine.deleteFrom(tableName,attributeName,condition,condValue);
+	}
+	engine.deleteFrom(tableName,attributeName,condition,condValuePtr);
 
 	return 0;
 
@@ -318,20 +329,34 @@ string queryType(int index,vector<string> operations){
 		operation = operations[index+2];
 		attributeName = operations[index+3];
 		othertablename = queryType(index+4,operations);
-		
+
 		int tIndex = engine.FindTable(othertablename);
 
-		engine.entityTables.push_back(engine.selection(engine.entityTables[tIndex].getName(),tableName,attribute,operation,0));
-		
+		void* attributeNamePtr;
+		if( isInteger(attributeName) ){
+
+			int condValue = atoi(attributeName.c_str());
+			attributeNamePtr = &condValue;
+		}
+
+		else{
+
+			string condValue = attributeName;
+			attributeNamePtr = &condValue;
+
+		}
+
+		engine.entityTables.push_back(engine.selection(engine.entityTables[tIndex].getName(),tableName,attribute,operation,attributeNamePtr));
+
 		return tableName;
-		
+
 	}
 
 	// <- project (attributename) | atomic-exp
 	else if( instruction == "project" ){
 
 		attributeName = operations[index+1];
-		
+
 		othertablename = queryType(index+2,operations);
 
 		int tIndex = engine.FindTable(othertablename);
@@ -352,7 +377,7 @@ string queryType(int index,vector<string> operations){
 		vector<string> data;
 
 		attributeName = operations[index+1];
-		
+
 		othertablename = queryType(index+2,operations);
 
 		int tIndex = engine.FindTable(othertablename);
@@ -544,7 +569,7 @@ int showTable(vector<string> operations){
 
 		cout << engine.entityTables[tIndex].getKeys()[i] << " ";
 	}
-	
+
 	cout << endl;
 
 	for(int i = 0; i < engine.entityTables[tIndex].getColumns().size(); i++ ){
@@ -573,7 +598,7 @@ int Operations(vector<string> operations){
 	if( operations[0] == "CREATE" ) {
 
 		if( createTable(operations) == TYPE_ERROR ){
-			
+
 			return TYPE_ERROR;	
 		}
 
@@ -590,7 +615,7 @@ int Operations(vector<string> operations){
 	}
 
 	else if( operations[0] == "WRITE" ){
-	
+
 		createFile(operations);
 	}
 
@@ -638,7 +663,7 @@ int Parse(string message, vector<string>& command){
 
 		//take strings out of the stream
 		input >> b;
-		
+
 		//check the string doesnt start with a (, if it does, erase it
 		if( (b[0] == '(' || b[0] == '"') ) { b.erase(b.begin()); }
 
