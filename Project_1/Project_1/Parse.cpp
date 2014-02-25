@@ -21,7 +21,7 @@ bool isInteger(const string & s)
 	return (*p == 0) ;
 }
 
-int createTable(vector<string> operations){
+int Parser::createTable(vector<string> operations){
 
 	string tableName;
 	vector<string> data;
@@ -61,7 +61,7 @@ int createTable(vector<string> operations){
 	return 0;
 }
 
-int insertInto(vector<string> operations){
+int Parser::insertInto(vector<string> operations){
 
 	string tableName = operations[2];
 	vector<Datum> data;
@@ -85,7 +85,7 @@ int insertInto(vector<string> operations){
 	return 0;
 }
 
-int openTable(vector<string> operations){
+int Parser::openTable(vector<string> operations){
 
 	char symbol = NULL;
 	string input;
@@ -165,7 +165,7 @@ int openTable(vector<string> operations){
 	return 0;
 }
 
-int createFile(vector<string> operations){
+int Parser::createFile(vector<string> operations){
 
 	ofstream dbFile;
 	string filename = operations[1]+ ".db";
@@ -179,7 +179,7 @@ int createFile(vector<string> operations){
 	return 0;
 }
 
-int saveToTable(vector<string> operations){
+int Parser::saveToTable(vector<string> operations){
 
 	int tIndex;
 	string tableName = operations[1];
@@ -243,7 +243,7 @@ int saveToTable(vector<string> operations){
 }
 
 //UPDATE Random SET (Color = 20) WHERE (Color < 5) 
-int updateTable(vector<string> operations){
+int Parser::updateTable(vector<string> operations){
 
 	string tableName = operations[1];
 
@@ -281,7 +281,7 @@ int updateTable(vector<string> operations){
 }
 
 //DELETE FROM relation-Name Where (Color < 5)
-int deleteFrom(vector<string> operations){
+int Parser::deleteFrom(vector<string> operations){
 
 	string tableName = operations[2];
 
@@ -309,7 +309,7 @@ int deleteFrom(vector<string> operations){
 
 }
 
-string queryType(int index,vector<string> operations){
+string Parser::queryType(int index,vector<string> operations){
 
 	string tableName = operations[0];
 	string instruction = operations[index];
@@ -496,63 +496,7 @@ string queryType(int index,vector<string> operations){
 
 }
 
-//compare stuff
-Table comparisons(vector<string> operations, int index){
-
-	vector<string> key;
-	string identifier = operations[index];
-
-	if( index + 1 == operations.size() ){
-
-		return Table("Table1",key);
-	}
-
-	string operation = operations[index+1];
-
-	if( operation == ">" ){
-
-
-	}
-
-	else if( operation == "<" ){
-
-	}
-
-	else if( operation == "!=" ){
-
-	}
-	else if( operation == ">=" ){
-
-
-	}
-	else if( operation == "<=" ){
-
-
-	}
-
-	else if( operation == "==" ){
-
-
-	}
-
-	else{
-
-	}
-
-	return Table("TABLE1",key);
-}
-
-string getString(vector<string> operations, int index){
-
-
-	if( index == operations.size() - 1 ){
-
-		return operations[index];
-	}
-
-}
-
-int showTable(vector<string> operations){
+int Parser::showTable(vector<string> operations){
 
 	//Find the table using second index in operation since
 	//SHOW tableName, tableName always second string
@@ -593,12 +537,12 @@ int showTable(vector<string> operations){
 	return 0;
 }
 
-int Operations(vector<string> operations){
+int Parser::Operations(vector<string> operations){
 
 	if( operations[0] == "CREATE" ) {
 
 		if( createTable(operations) == TYPE_ERROR ){
-
+			
 			return TYPE_ERROR;	
 		}
 
@@ -606,7 +550,10 @@ int Operations(vector<string> operations){
 
 	else if( operations[0] == "INSERT"){
 
-		insertInto(operations);
+		if( insertInto(operations) == -1 ){
+			
+			return -1;
+		}
 	}
 
 	else if( operations[0] == "OPEN" ){
@@ -615,18 +562,24 @@ int Operations(vector<string> operations){
 	}
 
 	else if( operations[0] == "WRITE" ){
-
+	
 		createFile(operations);
 	}
 
 	else if( operations[0] == "CLOSE" ){
 
-		saveToTable(operations);
+		if( saveToTable(operations) == CANT_FIND_TABLE){
+			
+			return CANT_FIND_TABLE;
+		}
 	}
 
 	else if( operations[0] == "SHOW"){
 
-		showTable(operations);
+		if( showTable(operations) == CANT_FIND_TABLE){
+			
+			return CANT_FIND_TABLE;	
+		}
 	}
 
 	else if( operations[0] == "UPDATE"){
@@ -642,14 +595,20 @@ int Operations(vector<string> operations){
 	else if( operations[1] == "<-" ){
 
 		//Three is how this function should start for query
-		queryType(2,operations);
+		string tableName = queryType(2,operations);
+
+		//queryType returns "Error" if something wrong happened
+		if( tableName == "Error" ){
+			
+			return -1;
+		}
 	}
 
 	return 0;
 
 }
 
-int Parse(string message, vector<string>& command){
+int Parser::Parse(string message, vector<string>& command){
 
 	string b;
 	size_t found;
