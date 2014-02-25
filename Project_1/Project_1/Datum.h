@@ -38,9 +38,11 @@ public:
 	}
 	Datum(int v) : value(v){
 		name = "";
+		type = "number";
 	}
 	Datum(string s) : name(s) {
 		value = UNINITIALIZED;
+		type = "string";
 	}
 
 	string getName() { return name; }

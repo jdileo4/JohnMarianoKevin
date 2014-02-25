@@ -181,35 +181,35 @@ int Engine::deleteFrom(string tableName, string att, string cond, void* condVal)
 		if(cond == ">"){
 			for(int k = 0; k < dataSize; k++){
 				if(tempData[k].getValue() > intCondVal){
-					entityTables[i].columns[j].updateData(Datum(NULL, type), k);	
+					entityTables[i].columns[j].updateData(Datum(), k);	
 					errorCode = 0;
 				}
 			}
 		} else if(cond == "<"){
 			for(int k = 0; k < dataSize; k++){
 				if(tempData[k].getValue() < intCondVal){
-					entityTables[i].columns[j].updateData(Datum(NULL, type), k);
+					entityTables[i].columns[j].updateData(Datum(), k);
 					errorCode = 0;
 				}
 			}
 		} else if(cond == "=="){
 			for(int k = 0; k < dataSize; k++){
 				if(tempData[k].getValue() == intCondVal){
-					entityTables[i].columns[j].updateData(Datum(NULL, type), k);
+					entityTables[i].columns[j].updateData(Datum(), k);
 					errorCode = 0;
 				}
 			}
 		} else if(cond == ">="){
 			for(int k = 0; k < dataSize; k++){
 				if(tempData[k].getValue() >= intCondVal){
-					entityTables[i].columns[j].updateData(Datum(NULL, type), k);
+					entityTables[i].columns[j].updateData(Datum(), k);
 					errorCode = 0;
 				}
 			}
 		} else if(cond == "<="){
 			for(int k = 0; k < dataSize; k++){
 				if(tempData[k].getValue() <= intCondVal){
-					entityTables[i].columns[j].updateData(Datum(NULL, type), k);
+					entityTables[i].columns[j].updateData(Datum(), k);
 					errorCode = 0;
 				}
 			}
@@ -221,7 +221,7 @@ int Engine::deleteFrom(string tableName, string att, string cond, void* condVal)
 		if(cond == "=="){
 			for(int k = 0; k < dataSize; k++){
 				if(tempData[k].getName() == stringCondVal){
-					entityTables[i].columns[j].updateData(Datum("", type), k);
+					entityTables[i].columns[j].updateData(Datum(), k);
 					errorCode = 0;
 				}
 			}
