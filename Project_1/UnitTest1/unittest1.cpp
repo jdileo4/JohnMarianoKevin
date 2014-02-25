@@ -378,14 +378,18 @@ namespace UnitTest1
 		
 		TEST_METHOD(OPEN_AND_WRITE)
 		{
+			Parser parser;
+
 			vector<string> data;
 			string message = "OPEN Random;";
 
-			Parse(message,data);
+			parser.Parse(message,data);
 
 			//At the beginning, the file will not be there
-			//If test doesn't pass, file is already there
-			Assert::AreEqual(-1,Operations(data));
+			//If test doesn't pass, file is already there,so comment line
+			parser.Operations(data);
+
+			//Assert::AreEqual(1,parser.engine.getEntitySize());
 
 			//Create the file and test for 0 now
 			string message2 = "WRITE Random;";
@@ -393,82 +397,143 @@ namespace UnitTest1
 			//Clear the vector
 			data.clear();
 
-			Parse(message2,data);
-			Assert::AreEqual(0,Operations(data));
+			parser.Parse(message2,data);
+			Assert::AreEqual(0,parser.Operations(data));
 
 			//Now try to OPEN the file
 			data.clear();
 
-			Parse(message,data);
-			Assert::AreEqual(0,Operations(data));
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
 		}
 
-		TEST_METHOD(CREATING_AND_INSERTING){
+		TEST_METHOD(CREATING_INSERTING_CLOSING){
 
-			/*vector<string> keyColumns;
-			keyColumns.push_back("FOOD");
-			keyColumns.push_back("PRICE");
-
-			Table table("Random",keyColumns);
-
-			table.addColumn("FOOD","STRING");
-			table.addColumn("PRICE","INTERGER");
-			table.addColumn("TYPE","STRING");
-
-			vector<Datum> data,data1,data2;
-			data.push_back(Datum("SPAGETTI"));
-			data.push_back(Datum("20.00"));
-			data.push_back(Datum("ITALIAN"));
-
-			data1.push_back(Datum("Fish"));
-			data1.push_back(Datum("10.00"));
-			data1.push_back(Datum("SeaFood"));
-
-			data2.push_back(Datum("MEAT"));
-			data2.push_back(Datum("15.00"));
-			data2.push_back(Datum("MENFOOD"));
-
-			table.addRow(data);
-			table.addRow(data1);
-			table.addRow(data2);*/
+			Parser parser;
 
 			//Create the table First, check if returning correctly
 			vector<string> data;
 			string message = "CREATE TABLE Food (FOOD STRING, PRICE INTERGER, TYPE STRING) PRIMARY KEY (FOOD,PRICE);";
-			Parse(message,data);
-			Assert::AreEqual(0,Operations(data));
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
 
-			//Add rows to the newly created table Food
+			//Insert rows to the newly created table Food
 			data.clear();
 			message = "INSERT INTO Food VALUES FROM (SPAGUETTI, 20.00, Italian);";
-			Parse(message,data);
-			Assert::AreEqual(0,Operations(data));
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
 
 			data.clear();
 			message = "INSERT INTO Food VALUES FROM (Fish, 15.00, SeaFood);";
-			Parse(message,data);
-			Assert::AreEqual(0,Operations(data));
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
 		
+			//Assert::AreEqual(1,parser.engine.getEntitySize());
+			data.clear();
+			message = "WRITE Food;";
+			parser.Parse(message,data);
+			parser.Operations(data);
+
+			//Finally, save table to a file
+			data.clear();
+			message = "CLOSE Food;";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
 		}
-		
+
 		TEST_METHOD(QUERY_TYPE){
+
+			Parser parser;
 
 			//We first open a File containing a Table
 			vector<string> data;
 			string message = "OPEN Random;";
 
-			Parse(message,data);
-			Assert::AreEqual(0,Operations(data));
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
 
 			data.clear();
-			message = "Favorite <- select ( Food == SPAGUETTI);";
-			Parse(message,data);
-			Assert::AreEqual(0,Operations(data));
+			message = "Favorite <- select (Food == SPAGUETTI) Random;";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
 
 			data.clear();
-			message = "Favorite <- rename Food, FOOD;";
-			Parse(message,data);
-			Assert::AreEqual(0,Operations(data));
+			message = "Favorite <- rename Food FOOD;";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			data.clear();
+			message = "Favorite <- Random + Food;";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			data.clear();
+			message = "Favorite <- Random - Food;";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			data.clear();
+			message = "Favorite <- Random * Food;";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+		}
+
+		TEST_METHOD(SHOW){
+
+			//Get a table
+			Parser parser;
+
+			vector<string> data;
+			string message = "OPEN Random;";
+
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			//Now show that table
+			message = "SHOW Random;";
+
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+		}
+
+		TEST_METHOD(UPDATE){
+
+			//Get a table
+			Parser parser;
+
+			vector<string> data;
+			string message = "OPEN Random;";
+
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			//Now show that table
+			message = "UPDATE Random SET (Food = Bread) WHERE (Food = SPAGUETTI);";
+
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+
+		}
+		TEST_METHOD(DELETE){
+			
+			//Get a table
+			Parser parser;
+
+			vector<string> data;
+			string message = "OPEN Random;";
+
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			//Now show that table
+			message = "DELETE FROM Random WHERE (FOOD == Spaguetti);";
+
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
 
 		}
 
