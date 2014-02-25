@@ -737,10 +737,8 @@ namespace UnitTest1
 			//If test doesn't pass, file is already there,so comment line
 			parser.Operations(data);
 
-			//Assert::AreEqual(1,parser.engine.getEntitySize());
-
 			//Create the file and test for 0 now
-			string message2 = "WRITE Random;";
+			string message2 = "WRITE CHEESE;";
 			
 			//Clear the vector
 			data.clear();
@@ -754,30 +752,29 @@ namespace UnitTest1
 			parser.Parse(message,data);
 			Assert::AreEqual(0,parser.Operations(data));
 		}
-*/
 
-		TEST_METHOD(CREATING_INSERTING_CLOSING)
-		{
+		TEST_METHOD(CREATING_INSERTING_CLOSING){
+
 			Parser parser;
 
 			//Create the table First, check if returning correctly
 			vector<string> data;
 			string message = "CREATE TABLE Food (FOOD STRING, PRICE INTERGER, TYPE STRING) PRIMARY KEY (FOOD,PRICE);";
 			parser.Parse(message,data);
-			Assert::AreEqual(0, parser.Operations(data));
+			Assert::AreEqual(0,parser.Operations(data));
 
 			//Insert rows to the newly created table Food
 			data.clear();
-			message = "INSERT INTO Food VALUES FROM (SPAGUETTI, 20, Italian);";
+			message = "INSERT INTO Food VALUES FROM (SPAGUETTI, 20.00, Italian);";
 			parser.Parse(message,data);
-			Assert::AreEqual(0, parser.Operations(data));
+			Assert::AreEqual(0,parser.Operations(data));
 
 			data.clear();
-			message = "INSERT INTO Food VALUES FROM (Fish, 15, SeaFood);";
+			message = "INSERT INTO Food VALUES FROM (Fish, 15.00, SeaFood);";
 			parser.Parse(message,data);
-			Assert::AreEqual(0, parser.Operations(data));
+			Assert::AreEqual(0,parser.Operations(data));
 		
-			//Assert::AreEqual(1,parser.engine.getEntitySize());
+			Assert::AreEqual(1,parser.engine.getEntitySize());
 			data.clear();
 			message = "WRITE Food;";
 			parser.Parse(message,data);
@@ -791,14 +788,41 @@ namespace UnitTest1
 
 		}
 
-/*		TEST_METHOD(QUERY_TYPE){
+		TEST_METHOD(QUERY_TYPE){
 
 			Parser parser;
 
-			//We first open a File containing a Table
+			//Create the table First, check if returning correctly
 			vector<string> data;
-			string message = "OPEN Random;";
+			string message = "CREATE TABLE Food (FOOD STRING, PRICE INTERGER, TYPE STRING) PRIMARY KEY (FOOD,PRICE);";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
 
+			//Insert rows to the newly created table Food
+			data.clear();
+			message = "INSERT INTO Food VALUES FROM (SPAGUETTI, 20.00, Italian);";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			data.clear();
+			message = "INSERT INTO Food VALUES FROM (Fish, 15.00, SeaFood);";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			//Make Second Table
+			data.clear();
+			message = "CREATE TABLE Random (FOOD STRING, PRICE INTERGER, TYPE STRING) PRIMARY KEY (FOOD,PRICE);";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			//Insert rows to the newly created table Food
+			data.clear();
+			message = "INSERT INTO Random VALUES FROM (Tacos, 12.00, Italian);";
+			parser.Parse(message,data);
+			Assert::AreEqual(0,parser.Operations(data));
+
+			data.clear();
+			message = "INSERT INTO Random VALUES FROM (Fish, 29.00, SeaFood);";
 			parser.Parse(message,data);
 			Assert::AreEqual(0,parser.Operations(data));
 
@@ -808,7 +832,7 @@ namespace UnitTest1
 			Assert::AreEqual(0,parser.Operations(data));
 
 			data.clear();
-			message = "Favorite <- rename Food FOOD;";
+			message = "Favorite <- rename FOOD Food;";
 			parser.Parse(message,data);
 			Assert::AreEqual(0,parser.Operations(data));
 
@@ -864,9 +888,8 @@ namespace UnitTest1
 
 			parser.Parse(message,data);
 			Assert::AreEqual(0,parser.Operations(data));
-
-
 		}
+
 		TEST_METHOD(DELETE){
 			
 			//Get a table
